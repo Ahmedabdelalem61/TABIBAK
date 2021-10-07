@@ -31,17 +31,17 @@ class KidnyFormScreenState extends State<KidnyFormScreen> {
   TextEditingController wc = TextEditingController();
   bool htn = false;
 
-  KidneyModel kidneyModel = KidneyModel(
-      age: 15,
-      al: 15,
-      su: 15,
-      bgr: 15,
-      bu: 15,
-      sc: 15,
-      hemo: 15,
-      pcv: 15,
-      wc: 15,
-      htn: 'YES');
+  late KidneyModel kidneyModel = KidneyModel(
+      age: double.parse(age.text),
+      al: double.parse(al.text),
+      su: double.parse(su.text),
+      bgr: double.parse(bgr.text),
+      bu: double.parse(bu.text),
+      sc: double.parse(sc.text),
+      hemo: double.parse(hemo.text),
+      pcv: double.parse(pcv.text),
+      wc: double.parse(wc.text),
+      htn: htn ? "yes" : "no");
 
   List<Step> stepList() => [
         Step(
@@ -154,15 +154,15 @@ class KidnyFormScreenState extends State<KidnyFormScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                BuildTextforstepper(controller: age, val: 'age'),
-                BuildTextforstepper(controller: al, val: 'al'),
-                BuildTextforstepper(controller: su, val: 'su'),
-                BuildTextforstepper(controller: bgr, val: 'bgr'),
-                BuildTextforstepper(controller: bu, val: 'bu'),
-                BuildTextforstepper(controller: sc, val: 'sc'),
-                BuildTextforstepper(controller: hemo, val: 'hemo'),
-                BuildTextforstepper(controller: pcv, val: 'pcv'),
-                BuildTextforstepper(controller: wc, val: 'wc'),
+                 BuildTextforstepper(controller: age, val: 'age'),
+                 BuildTextforstepper(controller: al, val: 'al'),
+                 BuildTextforstepper(controller: su, val: 'su'),
+                 BuildTextforstepper(controller: bgr, val: 'bgr'),
+                 BuildTextforstepper(controller: bu, val: 'bu'),
+                 BuildTextforstepper(controller: sc, val: 'sc'),
+                 BuildTextforstepper(controller: hemo, val: 'hemo'),
+                 BuildTextforstepper(controller: pcv, val: 'pcv'),
+                 BuildTextforstepper(controller: wc, val: 'wc'),
               ],
             )))
       ];
@@ -195,12 +195,16 @@ class KidnyFormScreenState extends State<KidnyFormScreen> {
                   _activeStepIndex += 1;
                 });
               } else {
-                DioHelper.postData(data: kidneyModel.toMap(), endPoint: 'kidney_data').then((value) {
-                navigateTo(context, KidneyResultScreen());
-                print(value.data);
-                }).catchError((){});
-
-                
+                DioHelper.getData(
+                        endPoint: 'kidney_data')
+                    .then((value) {
+                  navigateTo(context, KidneyResultScreen());
+                  print('kidny result!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+                  print(value.data);
+                  print(kidneyModel.age);
+                }).catchError((error) {
+                  print(error);
+                });
               }
             },
             onStepCancel: () {

@@ -15,7 +15,7 @@ class DioHelper{
   }
   static Future<Response>  getData({
     @required String? endPoint,
-     Map<String,dynamic?>? query,
+     Map<String,dynamic>? query,
    }
    )async{
     dio!.options.headers = {
@@ -33,7 +33,7 @@ class DioHelper{
     dio!.options.headers = {
       'Content-Type':'application/json'
     };
-    return dio!.post(endPoint!,data: data,queryParameters: query??null);
+    return  dio!.post(endPoint!,data: data,queryParameters: query??null);
   }
 
   static Future<Response>  putData({
@@ -45,8 +45,6 @@ class DioHelper{
   }
       )async{
     dio!.options.headers = {
-      'lang':lang,
-      'Authorization':token??'',
       'Content-Type':'application/json'
     };
     return dio!.put(endPoint!,data: data,queryParameters: query??null);
