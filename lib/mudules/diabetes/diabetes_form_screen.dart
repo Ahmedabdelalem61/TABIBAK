@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tabibak/mudules/diabetes/diabetes_result_screen.dart';
 import 'package:tabibak/shared/components/news_component.dart';
 import 'package:tabibak/shared/styles/icon_broken.dart';
 import 'package:tabibak/shared/styles/themes.dart';
-
-import 'diabetes_result_screen.dart';
-import 'heart_result_screen.dart';
 
 class DiabetesFormScreen extends StatefulWidget {
   @override
@@ -125,7 +123,7 @@ class DiabetesFormScreenState extends State<DiabetesFormScreen> {
           data: ThemeData(
 
               colorScheme: ColorScheme.light(
-            primary: defaultColor!,
+            primary: defaultColor,
           )),
           child: Stepper(
             physics: BouncingScrollPhysics(),

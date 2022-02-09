@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 Widget defaultButton({
   @required var whenPress ,
-  Color background = Colors.blue,
+  Color? background = Colors.blue,
   @required String? text,
   Color textColor = Colors.white,
   bool fullWidth = true,

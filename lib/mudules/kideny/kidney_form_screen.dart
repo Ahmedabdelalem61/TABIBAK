@@ -1,15 +1,12 @@
 // ignore_for_file: non_constant_identifier_names
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tabibak/models/kidney_data.dart';
 import 'package:tabibak/models/kidney_data.dart';
 import 'package:tabibak/remote/dio_helper.dart';
 import 'package:tabibak/shared/components/news_component.dart';
 import 'package:tabibak/shared/styles/icon_broken.dart';
 import 'package:tabibak/shared/styles/themes.dart';
 
-import 'heart_result_screen.dart';
 import 'kidney_result_screen.dart';
 
 class KidnyFormScreen extends StatefulWidget {
@@ -133,7 +130,7 @@ class KidnyFormScreenState extends State<KidnyFormScreen> {
                               print(htn);
                             });
                           },
-                          activeTrackColor: defaultColor?.withOpacity(.2),
+                          activeTrackColor: defaultColor.withOpacity(.2),
                           activeColor: defaultColor,
                         ),
                       ],
@@ -182,7 +179,7 @@ class KidnyFormScreenState extends State<KidnyFormScreen> {
         body: Theme(
           data: ThemeData(
               colorScheme: ColorScheme.light(
-            primary: defaultColor!,
+            primary: defaultColor,
           )),
           child: Stepper(
             physics: BouncingScrollPhysics(),

@@ -1,17 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
-import 'package:tabibak/mudules/diabetes_form_screen.dart';
-import 'package:tabibak/mudules/diabetes_result_screen.dart';
-import 'package:tabibak/mudules/heart_form_screen.dart';
-import 'package:tabibak/mudules/profile_screen.dart';
+import 'package:tabibak/mudules/diabetes/diabetes_form_screen.dart';
+
+import 'package:tabibak/mudules/profile/profile_screen.dart';
 import 'package:tabibak/shared/components/news_component.dart';
 import 'package:tabibak/shared/styles/icon_broken.dart';
 import 'package:tabibak/shared/styles/themes.dart';
 
-import 'kidney_form_screen.dart';
+import 'heart/heart_form_screen.dart';
+import 'kideny/kidney_form_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   @override

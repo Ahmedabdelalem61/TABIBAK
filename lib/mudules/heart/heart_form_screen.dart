@@ -141,7 +141,7 @@ class HeartFormScreenState extends State<HeartFormScreen> {
           data: ThemeData(
 
               colorScheme: ColorScheme.light(
-            primary: defaultColor!,
+            primary: defaultColor,
           )),
           child: Stepper(
             physics: BouncingScrollPhysics(),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:tabibak/shared/styles/icon_broken.dart';
+import 'package:tabibak/shared/styles/themes.dart';
 
 
 Widget DefaultTextFormField(
@@ -23,12 +25,19 @@ Widget DefaultTextFormField(
     validator: validate,
     onTap: onTap,
     decoration: InputDecoration(
+
       labelText: label,
       prefixIcon: Icon(prefix),
       suffixIcon: suffix != null
           ? IconButton(icon: Icon(suffix), onPressed: suffixPressed)
           : null,
-      border: OutlineInputBorder(),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(15),
+        borderSide: BorderSide(
+          color: Colors.red,
+          width: 3.0
+        )
+      ),
     ),
   );
 }
