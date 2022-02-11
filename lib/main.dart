@@ -19,6 +19,7 @@ void main() async {
     },
     blocObserver: MyBlocObserver(),
   );
+  print(CacheHelper.getData(key: 'token'));
   runApp(MyApp());
 }
 

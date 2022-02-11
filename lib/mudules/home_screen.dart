@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tabibak/mudules/diabetes/diabetes_form_screen.dart';
+import 'package:tabibak/mudules/profile/profile_provider.dart';
 
 import 'package:tabibak/mudules/profile/profile_screen.dart';
 import 'package:tabibak/shared/components/news_component.dart';
@@ -35,7 +37,13 @@ class HomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(right: 15, top: 15),
                 child: IconButton(
                     onPressed: () {
-                      navigateTo(context, ProfileScreen());
+                      navigateTo(
+                        context,
+                        ChangeNotifierProvider<ProfileProvider>(
+                          create: (_) => ProfileProvider()..getProfileData(),
+                          child: ProfileScreen(),
+                        ),
+                      );
                     },
                     icon: Icon(
                       IconBroken.Category,
@@ -118,8 +126,14 @@ class HomeScreen extends StatelessWidget {
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.all(15.0),
-                                        child: Text('Heart Disease',style: TextStyle(fontSize: 13,
-                                            fontFamily: 'spartman',color: Colors.black,fontWeight: FontWeight.bold),),
+                                        child: Text(
+                                          'Heart Disease',
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              fontFamily: 'spartman',
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold),
+                                        ),
                                       )
                                     ],
                                   ),
@@ -140,7 +154,8 @@ class HomeScreen extends StatelessWidget {
                                       // ,color: defaultColor
                                       ),
                                   child: Stack(
-                                    alignment: AlignmentDirectional.bottomCenter,
+                                    alignment:
+                                        AlignmentDirectional.bottomCenter,
                                     clipBehavior: Clip.antiAlias,
                                     children: [
                                       Card(
@@ -150,8 +165,7 @@ class HomeScreen extends StatelessWidget {
                                           fit: BoxFit.fill,
                                           height: 150,
                                           width: 150,
-                                         // color: Colors.white.withOpacity(.5),
-
+                                          // color: Colors.white.withOpacity(.5),
                                         ),
                                         clipBehavior: Clip.antiAlias,
                                         shape: RoundedRectangleBorder(
@@ -160,14 +174,22 @@ class HomeScreen extends StatelessWidget {
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.all(15.0),
-                                        child: Text('kidney Disease',style: TextStyle(fontSize: 13,
-                                            fontFamily: 'spartman',color: Colors.black,fontWeight: FontWeight.bold),),
+                                        child: Text(
+                                          'kidney Disease',
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              fontFamily: 'spartman',
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold),
+                                        ),
                                       )
                                     ],
                                   ),
                                 ),
                                 borderRadius: BorderRadius.circular(30),
-                                onTap: () {navigateTo(context, KidnyFormScreen());},
+                                onTap: () {
+                                  navigateTo(context, KidnyFormScreen());
+                                },
                                 splashColor: defaultColor,
                               ),
                               SizedBox(
@@ -198,8 +220,14 @@ class HomeScreen extends StatelessWidget {
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.all(15.0),
-                                        child: Text('Diabetes Disease',style: TextStyle(fontSize: 13,
-                                            fontFamily: 'spartman',color: Colors.black,fontWeight: FontWeight.bold),),
+                                        child: Text(
+                                          'Diabetes Disease',
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              fontFamily: 'spartman',
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold),
+                                        ),
                                       )
                                     ],
                                   ),

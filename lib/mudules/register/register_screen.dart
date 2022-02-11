@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
@@ -17,13 +16,15 @@ class RegisterScreen extends StatelessWidget {
   TextEditingController emailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  void _submit() {
-
+  void _clearControllers() {
+    useranmeController.clear();
+    passwordController.clear();
   }
 
   @override
   Widget build(BuildContext context) {
-    final _registerProvider = Provider.of<RegisterProvider>(context,listen: true);
+    final _registerProvider =
+        Provider.of<RegisterProvider>(context, listen: true);
     return Scaffold(
       body: Center(
         child: Padding(
@@ -34,9 +35,22 @@ class RegisterScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  Container(
+                      width: 120,
+                      height: 120,
+                      child: Image(
+                          color: defaultColor,
+                          image: AssetImage(
+                              'assets/logo/TABIBAK-logos_transparent.png'))),
                   Text(
-                    'Register',
-                    style: TextStyle(fontSize: 35, fontFamily: 'spartman'),
+                    _registerProvider.loginType == registerOrLogn.login
+                        ? 'Login'
+                        : 'Register',
+                    style: TextStyle(
+                        fontSize: 35,
+                        fontFamily: 'spartman',
+                        color: defaultColor,
+                        fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
                     height: 40.0,
@@ -45,7 +59,7 @@ class RegisterScreen extends StatelessWidget {
                       controller: useranmeController,
                       type: TextInputType.emailAddress,
                       validate: (String? value) {
-                        if ( value!.isEmpty) {
+                        if (value!.isEmpty) {
                           return "username must not be empty";
                         }
                         return null;
@@ -55,71 +69,88 @@ class RegisterScreen extends StatelessWidget {
                   SizedBox(
                     height: 8.0,
                   ),
-                  DefaultTextFormField(
-                      controller: emailController,
-                      type: TextInputType.emailAddress,
-                      validate: (String? value) {
-                        if (value!.isEmpty) {
-                          return "Email Adress must not be empty";
-                        }
-                        return null;
-                      },
-                      label: 'Email Adress',
-                      prefix: Icons.email_outlined),
+                  if (_registerProvider.loginType == registerOrLogn.register)
+                    DefaultTextFormField(
+                        controller: emailController,
+                        type: TextInputType.emailAddress,
+                        validate: (String? value) {
+                          if (value!.isEmpty) {
+                            return "Email Address must not be empty";
+                          }
+                          return null;
+                        },
+                        label: 'Email Address',
+                        prefix: Icons.email_outlined),
                   SizedBox(
                     height: 8.0,
                   ),
                   DefaultTextFormField(
-                      controller: passwordController,
-                      type: TextInputType.visiblePassword,
-                      validate: (String? value) {
-                        if (value!.isEmpty) {
-                          return "password must not be empty";
-                        }
-                        return null;
-                      },
-                      label: 'password',
-                      ispassword: true,
-                      suffixPressed: (){
-                       // SocialLoginCubit.get(context).changePasswordVisibility();
-                      },
-                      prefix: Icons.lock_outline,
-                      suffix:Icons.password_outlined,//SocialLoginCubit.get(context).suuffix ,
-                      onSubmit: (val) {
-                        // if (formKey.currentState.validate()) {
-                        //   SocialLoginCubit.get(context).userLogin(
-                        //       email: emaiController.text,
-                        //       password: passwordController.text
-                        //   );
-                        // }
-                      }),
+                    controller: passwordController,
+                    type: TextInputType.visiblePassword,
+                    validate: (String? value) {
+                      if (value!.isEmpty) {
+                        return "password must not be empty";
+                      }
+                      return null;
+                    },
+                    label: 'password',
+                    ispassword:
+                        _registerProvider.passwordIconVisible ? false : true,
+                    suffixPressed: () {
+                      _registerProvider.changePasswordVisibility();
+                    },
+                    prefix: Icons.lock_outline,
+                    suffix: _registerProvider.passwordIconVisible
+                        ? Icons.visibility
+                        : Icons.visibility_off,
+                  ),
                   SizedBox(
                     height: 20,
                   ),
-                  if(_registerProvider.isLoading)
+                  if (_registerProvider.isLoading)
                     Center(child: CircularProgressIndicator()),
-                  if(!_registerProvider.isLoading)
-                  Container(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
-
+                  if (!_registerProvider.isLoading)
+                    Container(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                            ),
                           ),
                         ),
+                        child: Text(
+                          _registerProvider.loginType == registerOrLogn.login
+                              ? 'login'
+                              : 'register',
+                          style: TextStyle(
+                              fontFamily: 'spartman',
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        onPressed: () {
+                          if (_formKey.currentState!.validate())
+                            _registerProvider.registerWithEmailAndPassword(
+                                context: context,
+                                email: emailController.text,
+                                password: passwordController.text,
+                                username: useranmeController.text);
+                          //
+                        },
                       ),
-                      child: Text('register',style: TextStyle( fontFamily: 'spartman',fontSize: 15,fontWeight: FontWeight.bold),),
-                      onPressed: () {
-                        if(_formKey.currentState!.validate())
-                        _registerProvider.registerWithEmailAndPassword(context: context,email: emailController.text,password: passwordController.text,username: useranmeController.text);
-                       //
-                      },
                     ),
-
+                  TextButton(
+                    onPressed: () {
+                      _registerProvider.toggleRegisterLogin();
+                      _clearControllers();
+                    },
+                    child: Text(
+                        (_registerProvider.loginType == registerOrLogn.login)
+                            ? 'create a new account'
+                            : 'already have an account?'),
                   ),
-                  TextButton(onPressed: (){}, child: Text('already have an account?')),
                 ],
               ),
             ),
@@ -128,6 +159,4 @@ class RegisterScreen extends StatelessWidget {
       ),
     );
   }
-
-
 }

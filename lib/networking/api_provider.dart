@@ -75,7 +75,7 @@ class ApiProvider {
   }
 
   Future<dynamic> postWithDio(String url,
-      {body, required Map<String, String> headers}) async {
+      {body, Map<String, String>? headers}) async {
     var responseJson;
     try {
       final response = await Dio().post(url,
@@ -92,6 +92,32 @@ class ApiProvider {
       throw FetchDataException('No Internet connection');
     }
     return responseJson;
+  }
+
+  Future<dynamic> putDataWithDio({
+    required String? Url,
+    Map<String, dynamic>? query,
+    Map<String, dynamic>? headers,
+    required Map<String, dynamic>? body,
+  }) async {
+    var _response ;
+   try{
+     _response =  await Dio().put(
+       Url.toString(),
+       data: body,
+       queryParameters: query ?? null,
+       options: Options(
+         followRedirects: false,
+         validateStatus: (status) {
+           return status! < 500;
+         },
+         headers: headers == null ? _defaultHeader : headers,
+       ),
+     );
+   } on SocketException {
+     throw FetchDataException('No Internet connection');
+   }
+   return _response;
   }
 
   dynamic _response(http.Response response) {
