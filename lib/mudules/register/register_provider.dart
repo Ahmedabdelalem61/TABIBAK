@@ -4,20 +4,24 @@ import 'package:tabibak/mudules/home_screen.dart';
 import 'package:tabibak/networking/api_provider.dart';
 import 'package:tabibak/shared/components/news_component.dart';
 import 'package:tabibak/shared/components/show_exception_alert_dialog.dart';
-import 'package:tabibak/shared/styles/icon_broken.dart';
 import 'package:tabibak/shared_preferences/shared_preferences.dart';
 enum registerOrLogn {login,register}
 class RegisterProvider extends ChangeNotifier{
   ApiProvider _ApiInstance = ApiProvider();
   bool isLoading  = false;
   bool passwordIconVisible  = false;
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  registerOrLogn loginType = registerOrLogn.login;
 
   void _setIsLoading(){
     isLoading = !isLoading;
     notifyListeners();
   }
 
-  registerOrLogn loginType = registerOrLogn.login;
+  void setFormKeyState(BuildContext context,RegisterProvider? registerProvider) {
+    formKey = GlobalKey<FormState>();
+    notifyListeners();
+  }
 
   Future<void> registerWithEmailAndPassword({required BuildContext context ,required String username,required String email,required String password}) async {
     _setIsLoading();
@@ -41,9 +45,10 @@ class RegisterProvider extends ChangeNotifier{
       }*/
       if(_response['status_code'] == 200){
         navigateAndFinish(context, HomeScreen());
-        CacheHelper.saveData(key: 'token', value: _response['token']);
-        CacheHelper.saveData(key: 'username', value: _response['user']['username']);
-        CacheHelper.saveData(key: 'email', value: _response['user']['email']);
+        print(_response.toString());
+        CacheHelper.saveData(key: 'token', value: _response['response']['token']);
+        CacheHelper.saveData(key: 'username', value: _response['response']['user']['username']);
+        CacheHelper.saveData(key: 'email', value: _response['response']['user']['email']);
       }
       else{
         showExceptionAlertDialog(context, title: 'failed to register', message: _response['response'].toString());

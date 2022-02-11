@@ -14,24 +14,19 @@ class RegisterScreen extends StatelessWidget {
   TextEditingController useranmeController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
 
-  void _clearControllers() {
-    useranmeController.clear();
-    passwordController.clear();
-  }
+
 
   @override
   Widget build(BuildContext context) {
-    final _registerProvider =
-        Provider.of<RegisterProvider>(context, listen: true);
+    final _registerProvider = Provider.of<RegisterProvider>(context, listen: true);
     return Scaffold(
       body: Center(
         child: Padding(
           padding: EdgeInsets.all(20.0),
           child: SingleChildScrollView(
             child: Form(
-              key: _formKey,
+              key: _registerProvider.formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -131,7 +126,7 @@ class RegisterScreen extends StatelessWidget {
                               fontWeight: FontWeight.bold),
                         ),
                         onPressed: () {
-                          if (_formKey.currentState!.validate())
+                          if (_registerProvider.formKey.currentState?.validate() as bool)
                             _registerProvider.registerWithEmailAndPassword(
                                 context: context,
                                 email: emailController.text,
@@ -143,8 +138,10 @@ class RegisterScreen extends StatelessWidget {
                     ),
                   TextButton(
                     onPressed: () {
+                      useranmeController.clear();
+                      passwordController.clear();
+                      _registerProvider.setFormKeyState(context,_registerProvider);
                       _registerProvider.toggleRegisterLogin();
-                      _clearControllers();
                     },
                     child: Text(
                         (_registerProvider.loginType == registerOrLogn.login)
