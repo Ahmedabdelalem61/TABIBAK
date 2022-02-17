@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:tabibak/networking/custom_exception.dart';
+import 'package:tabibak/shared_preferences/shared_preferences.dart';
 
 class ApiProvider {
 // next three lines makes this class a Singleton
@@ -21,7 +22,7 @@ class ApiProvider {
   Future<dynamic> get(String url, {Map<String, String>? header}) async {
     var responseJson;
     try {
-      final response = await http.get(Uri.encodeFull(url) as Uri,
+      final response = await http.get(Uri.parse(url),
           headers: header == null ? _defaultHeader : header);
       responseJson = _response(response);
     } on SocketException {
@@ -33,7 +34,7 @@ class ApiProvider {
   Future<dynamic> put(String url, {body, Map<String, String>? header}) async {
     var responseJson;
     try {
-      final response = await http.put(Uri.encodeFull(url) as Uri,
+      final response = await http.put(Uri.parse(url) ,
           headers: header == null ? _defaultHeader : header,
           body: json.encode(body));
       responseJson = _response(response);
@@ -46,7 +47,7 @@ class ApiProvider {
   Future<dynamic> post(String url, {body, Map<String, String>? header}) async {
     var responseJson;
     try {
-      final response = await http.post(Uri.encodeFull(url) as Uri,
+      final response = await http.post(Uri.parse(url),
           headers: header == null ? _defaultHeader : header,
           body: json.encode(body));
       responseJson = _response(response);
@@ -74,8 +75,7 @@ class ApiProvider {
     return responseJson;
   }
 
-  Future<dynamic> postWithDio(String url,
-      {body, Map<String, String>? headers}) async {
+  Future<dynamic> postWithDio(String url,{ Map<String, String>? body, Map<String, String>? headers}) async {
     var responseJson;
     try {
       final response = await Dio().post(url,

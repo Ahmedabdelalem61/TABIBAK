@@ -46,7 +46,7 @@ class RegisterProvider extends ChangeNotifier{
       if(_response['status_code'] == 200){
         navigateAndFinish(context, HomeScreen());
         print(_response.toString());
-        CacheHelper.saveData(key: 'token', value: _response['response']['token']);
+        CacheHelper.saveData(key: 'token', value: _response['response']['token']as String);
         CacheHelper.saveData(key: 'username', value: _response['response']['user']['username']);
         CacheHelper.saveData(key: 'email', value: _response['response']['user']['email']);
       }
@@ -70,6 +70,8 @@ class RegisterProvider extends ChangeNotifier{
       }
     }
     _setIsLoading();
+
+    await getProfileData();
   }
 
   void toggleRegisterLogin(){
@@ -86,6 +88,15 @@ class RegisterProvider extends ChangeNotifier{
     passwordIconVisible = !passwordIconVisible;
     notifyListeners();
   }
+
+
+  //TODO: delete this method later
+  Future<void> getProfileData() async{
+    final _response = await _ApiInstance.getWithDio( 'https://tabiba.herokuapp.com/account/api/profile/',headers: {
+    'Authorization':'c0688f39399841938898efaed72c02fe98b6062d20e997b397e69300aaf6776c',
+  });
+  print(_response);
+  } 
 
 
 }

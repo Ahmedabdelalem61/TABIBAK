@@ -40,8 +40,11 @@ class HomeScreen extends StatelessWidget {
                       navigateTo(
                         context,
                         ChangeNotifierProvider<ProfileProvider>(
-                          create: (_) => ProfileProvider()..getProfileData(),
-                          child: ProfileScreen(),
+                          create: (_) => ProfileProvider(),
+                          child: Consumer<ProfileProvider>(builder: (_,profileProvider,childl){
+                            profileProvider.getProfileData();
+                            return ProfileScreen();
+                          }),
                         ),
                       );
                     },
