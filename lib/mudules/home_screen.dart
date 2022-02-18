@@ -7,6 +7,7 @@ import 'package:tabibak/mudules/profile/profile_screen.dart';
 import 'package:tabibak/shared/components/news_component.dart';
 import 'package:tabibak/shared/styles/icon_broken.dart';
 import 'package:tabibak/shared/styles/themes.dart';
+import 'package:tabibak/shared_preferences/shared_preferences.dart';
 
 import 'heart/heart_form_screen.dart';
 import 'kideny/kidney_form_screen.dart';
@@ -15,25 +16,10 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: defaultColor,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: Text(
-                  'Welcome\nDenis H!',
-                  style: TextStyle(
-                      fontSize: 44,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ),
-              ),
-              Spacer(),
-              Padding(
+      appBar: AppBar(
+        backgroundColor: defaultColor,
+        actions: [
+                        Padding(
                 padding: const EdgeInsets.only(right: 15, top: 15),
                 child: IconButton(
                     onPressed: () {
@@ -42,7 +28,7 @@ class HomeScreen extends StatelessWidget {
                         ChangeNotifierProvider<ProfileProvider>(
                           create: (_) => ProfileProvider(),
                           child: Consumer<ProfileProvider>(builder: (_,profileProvider,childl){
-                            profileProvider.getProfileData();
+                            //TODO:remove  profileProvider.getProfileData();
                             return ProfileScreen();
                           }),
                         ),
@@ -54,14 +40,28 @@ class HomeScreen extends StatelessWidget {
                       color: Colors.white,
                     )),
               )
-            ],
-          ),
+        ],
+      ),
+      backgroundColor: defaultColor,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+                padding: const EdgeInsets.all(20),
+                child: Text(
+                  '${CacheHelper.getData(key: 'username').toString().split(' ')[0].toUpperCase()}',
+                  style: TextStyle(
+                      fontSize: 44,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
+              ),
           Padding(
             padding: const EdgeInsets.only(left: 20),
             child: Text(
               'Tabibak is here For You!',
               style: Theme.of(context).textTheme.caption?.copyWith(
-                  color: Colors.white, fontSize: 15, fontFamily: 'spartman'),
+                  color: Colors.white, fontSize: 18, fontFamily: 'spartman',fontWeight: FontWeight.bold),
             ),
           ),
           Expanded(

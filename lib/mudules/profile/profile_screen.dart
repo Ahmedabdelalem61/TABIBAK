@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:tabibak/mudules/home_screen.dart';
 import 'package:tabibak/mudules/profile/profile_provider.dart';
+import 'package:tabibak/mudules/register/register_provider.dart';
+import 'package:tabibak/mudules/register/register_screen.dart';
+import 'package:tabibak/shared/components/news_component.dart';
 import 'package:tabibak/shared/styles/icon_broken.dart';
 import 'package:tabibak/shared/styles/themes.dart';
+import 'package:tabibak/shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override
@@ -13,6 +18,19 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextButton(onPressed: (){CacheHelper.removeData(key: 'token');
+            navigateTo(context, ChangeNotifierProvider<RegisterProvider>(
+        create: (_) => RegisterProvider(),
+        child: CacheHelper.getData(key: 'token')==null? RegisterScreen():HomeScreen(),
+      ));
+            },
+             child: Text('Logout',style: TextStyle(color: defaultColor),),
+             ),
+          ),
+        ],
         leading: IconButton(
           icon: Icon(IconBroken.Arrow___Left_2),
           onPressed: () {

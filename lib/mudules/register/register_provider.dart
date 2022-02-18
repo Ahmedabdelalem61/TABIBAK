@@ -36,13 +36,6 @@ class RegisterProvider extends ChangeNotifier{
         'Content-Type': 'application/json'
       },
       );
-       /* {user: {
-          id: 5,
-          username: 'hdhdheh',
-          email: 'hxxhxhh@gmail.com'
-       },
-      token: '8e49cad9eaad3fad3798f6510875fc6c4d5e314df0a35fbe343951e576664b8b'
-      }*/
       if(_response['status_code'] == 200){
         navigateAndFinish(context, HomeScreen());
         print(_response.toString());
@@ -51,7 +44,7 @@ class RegisterProvider extends ChangeNotifier{
         CacheHelper.saveData(key: 'email', value: _response['response']['user']['email']);
       }
       else{
-        showExceptionAlertDialog(context, title: 'failed to register', message: _response['response'].toString());
+        showExceptionAlertDialog(context, title: 'failed to register', message: _response['response']['email'][0].toString());
       }
     }else{
       final _response = await _ApiInstance.postWithDio(
@@ -63,15 +56,22 @@ class RegisterProvider extends ChangeNotifier{
         'Content-Type': 'application/json'
       },
       );
-      if(_response['status_code'] == 200)
-        navigateAndFinish(context, HomeScreen());
+      print('response after login '+_response.toString());
+      if(_response['status_code'] == 200){
+        CacheHelper.saveData(key: 'token', value: _response['response']['token']);
+        await getProfileData().then((response) {
+          print('get profile'+response.toString());
+            CacheHelper.saveData(key: 'username', value: response['response']['username']);
+            CacheHelper.saveData(key: 'email', value: response['response']['email']);
+            navigateAndFinish(context, HomeScreen());
+        });
+      }
       else{
-        showExceptionAlertDialog(context, title: 'failed to login', message: _response['response'].toString());
+        showExceptionAlertDialog(context, title: 'failed to login', message: '${_response['response']['non_field_errors'][0].toString()}\nemail or password wrong');
       }
     }
-    _setIsLoading();
 
-    await getProfileData();
+    _setIsLoading();
   }
 
   void toggleRegisterLogin(){
@@ -91,11 +91,18 @@ class RegisterProvider extends ChangeNotifier{
 
 
   //TODO: delete this method later
-  Future<void> getProfileData() async{
+  Future<dynamic> getProfileData() async{
     final _response = await _ApiInstance.getWithDio( 'https://tabiba.herokuapp.com/account/api/profile/',headers: {
-    'Authorization':'c0688f39399841938898efaed72c02fe98b6062d20e997b397e69300aaf6776c',
-  });
-  print(_response);
+    'Authorization':'Token ${CacheHelper.getData(key: 'token')}',
+    });
+    return _response;
+  }
+
+  Future<dynamic> getKidenyData() async{
+    final _response = await _ApiInstance.getWithDio( 'https://tabiba.herokuapp.com/kidney/api/kidney_data',headers: {
+    'Authorization':'Token ${CacheHelper.getData(key: 'token')}',
+    });
+  return _response;
   } 
 
 

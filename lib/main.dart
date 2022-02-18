@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:tabibak/mudules/home_screen.dart';
 import 'package:tabibak/mudules/register/register_provider.dart';
 import 'package:tabibak/mudules/register/register_screen.dart';
-import 'package:tabibak/remote/dio_helper.dart';
 import 'package:tabibak/shared/styles/themes.dart';
 import 'package:tabibak/shared_preferences/shared_preferences.dart';
 
@@ -32,7 +31,7 @@ class MyApp extends StatelessWidget {
       home: SafeArea(
           child: ChangeNotifierProvider<RegisterProvider>(
         create: (_) => RegisterProvider(),
-        child: RegisterScreen(),
+        child: CacheHelper.getData(key: 'token') == null? RegisterScreen():HomeScreen(),
       )),
     );
   }

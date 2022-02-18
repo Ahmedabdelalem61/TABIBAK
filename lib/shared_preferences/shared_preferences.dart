@@ -24,18 +24,18 @@ class CacheHelper {
     required String key,
     required dynamic value
   }) async {
-    if (value is String) {
+    if (value is String ) {
       return await sharedPreferences!.setString(key, value);
     }
-    if (value is int) {
+    else if (value is int) {
       return await sharedPreferences!.setInt(key, value);
     }
-    if (value is double) {
+    else if (value is double) {
       return await sharedPreferences!.setDouble(key, value);
     }
-    return await sharedPreferences!.setBool(key, value);
+    else 
+      return await sharedPreferences!.setBool(key, value);
   }
-
   static Future<bool> removeData({required key}) async {
     return await sharedPreferences!.remove(key);
   }

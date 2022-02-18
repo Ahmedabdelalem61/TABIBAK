@@ -2,10 +2,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tabibak/models/kidney_data.dart';
+import 'package:tabibak/networking/api_provider.dart';
 import 'package:tabibak/remote/dio_helper.dart';
 import 'package:tabibak/shared/components/news_component.dart';
 import 'package:tabibak/shared/styles/icon_broken.dart';
 import 'package:tabibak/shared/styles/themes.dart';
+import 'package:tabibak/shared_preferences/shared_preferences.dart';
 
 import 'kidney_result_screen.dart';
 
@@ -151,15 +153,30 @@ class KidnyFormScreenState extends State<KidnyFormScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                 BuildTextforstepper(controller: age, val: 'age'),
-                 BuildTextforstepper(controller: al, val: 'al'),
-                 BuildTextforstepper(controller: su, val: 'su'),
-                 BuildTextforstepper(controller: bgr, val: 'bgr'),
-                 BuildTextforstepper(controller: bu, val: 'bu'),
-                 BuildTextforstepper(controller: sc, val: 'sc'),
-                 BuildTextforstepper(controller: hemo, val: 'hemo'),
-                 BuildTextforstepper(controller: pcv, val: 'pcv'),
-                 BuildTextforstepper(controller: wc, val: 'wc'),
+                Row(
+                  children: [
+                    BuildTextforstepper(controller: age, val: 'age'),
+                    BuildTextforstepper(controller: al, val: 'al'),
+                    BuildTextforstepper(controller: su, val: 'su'),
+                   
+                  ],
+                ),
+                Row(
+                  children: [
+                     BuildTextforstepper(controller: bgr, val: 'bgr'),
+                    BuildTextforstepper(controller: bu, val: 'bu'),
+                    BuildTextforstepper(controller: sc, val: 'sc'),
+                  ],
+                
+                ),
+                Row(
+                  children: [
+                    BuildTextforstepper(controller: hemo, val: 'hemo'),
+                    BuildTextforstepper(controller: pcv, val: 'pcv'),
+                    BuildTextforstepper(controller: wc, val: 'wc'),
+                  ],
+                ),
+                
               ],
             )))
       ];
@@ -192,15 +209,34 @@ class KidnyFormScreenState extends State<KidnyFormScreen> {
                   _activeStepIndex += 1;
                 });
               } else {
-                DioHelper.getData(
-                        endPoint: 'kidney_data')
-                    .then((value) {
+                ApiProvider apiProvider = ApiProvider();
+                apiProvider.postWithDio(
+                    'https://tabiba.herokuapp.com/kidney/api/kidney_data',
+                    headers: {
+                      'Authorization':
+                          'Token ${CacheHelper.getData(key: 'token')}'
+                    },
+                    body:{
+                         "age": age.text,
+                         "al": al.text,
+                         "su": su.text,
+                         "bgr": bgr.text,
+                         "bu": bu.text,
+                         "sc": sc.text,
+                         "hemo": hemo.text,
+                         "pcv": pcv.text,
+                         "wc": wc.text,
+                         "htn": htn==true?'yes':'no'
+                        }
+                      ).then((value) {
+                  print('kideny' + value.toString());
+                  CacheHelper.saveData(
+                      key: 'kideny_result',
+                      value: value['response']['result'][0]);
+                  CacheHelper.saveData(
+                      key: 'kideny_probability',
+                      value: value['response']['result2'][0][0]);
                   navigateTo(context, KidneyResultScreen());
-                  print('kidny result!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-                  print(value.data);
-                  print(kidneyModel.age);
-                }).catchError((error) {
-                  print(error);
                 });
               }
             },
@@ -252,9 +288,21 @@ class KidnyFormScreenState extends State<KidnyFormScreen> {
   Widget BuildTextforstepper(
           {@required String? val,
           @required TextEditingController? controller}) =>
-      Text(
-        '$val : ${controller!.text},',
-        style: TextStyle(fontFamily: 'spartman', fontWeight: FontWeight.bold),
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          decoration: BoxDecoration(
+              color: defaultColor, borderRadius: BorderRadius.circular(15)),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              '$val : ${controller!.text}',
+              style: TextStyle(
+                color: Colors.white,
+                  fontFamily: 'spartman', fontWeight: FontWeight.bold),
+            ),
+          ),
+        ),
       );
 }
 /*
