@@ -49,15 +49,15 @@ class HomeScreen extends StatelessWidget {
           Padding(
                 padding: const EdgeInsets.all(20),
                 child: Text(
-                  '${CacheHelper.getData(key: 'username').toString().split(' ')[0].toUpperCase()}',
+                  'Hi!\n${CacheHelper.getData(key: 'username').toString().split(' ')[0].toUpperCase()}',
                   style: TextStyle(
-                      fontSize: 44,
+                      fontSize: 35,
                       fontWeight: FontWeight.bold,
                       color: Colors.white),
                 ),
               ),
           Padding(
-            padding: const EdgeInsets.only(left: 20),
+            padding: const EdgeInsets.only(left:20.0,bottom: 20.0),
             child: Text(
               'Tabibak is here For You!',
               style: Theme.of(context).textTheme.caption?.copyWith(

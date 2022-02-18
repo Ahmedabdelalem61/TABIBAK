@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tabibak/networking/api_provider.dart';
+import 'package:tabibak/shared/components/component.dart';
 import 'package:tabibak/shared/components/news_component.dart';
 import 'package:tabibak/shared/styles/icon_broken.dart';
 import 'package:tabibak/shared/styles/themes.dart';
+import 'package:tabibak/shared_preferences/shared_preferences.dart';
 
 import 'heart_result_screen.dart';
 
@@ -12,17 +16,8 @@ class HeartFormScreen extends StatefulWidget {
 
 class HeartFormScreenState extends State<HeartFormScreen> {
   int _activeStepIndex = 0;
-
-  /*
-  *  "age": "50.00",
-        "cp": "200.01",
-        "trestbps": "350.00",
-        "chol": "50.00",
-        "thalach": "100.00",
-        "exang": "360.00",
-        "oldpeak": "140.00",
-        "ca": "900.00"
-        * */
+  GlobalKey<FormState> _formKeySteper1 = GlobalKey<FormState>();
+  GlobalKey<FormState> _formKeySteper2 = GlobalKey<FormState>();
 
   TextEditingController age = TextEditingController();
   TextEditingController cp = TextEditingController();
@@ -42,28 +37,31 @@ class HeartFormScreenState extends State<HeartFormScreen> {
             style: TextStyle(color: Colors.blueGrey),
           ),
           content: Container(
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 8,
-                ),
-                StepperTextFormField(label:'age' ,controller: age),
-                SizedBox(
-                  height: 8,
-                ),
-                StepperTextFormField(label:'cp' ,controller: cp),
-                SizedBox(
-                  height: 8,
-                ),
-                StepperTextFormField(controller: trestbps, label: 'trestbps'),
-                const SizedBox(
-                  height: 8,
-                ),
-                StepperTextFormField(controller: chol, label: 'chol'),
-                const SizedBox(
-                  height: 8,
-                ),
-              ],
+            child: Form(
+              key: _formKeySteper1,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 8,
+                  ),
+                  StepperTextFormField(label: 'age', controller: age,validatorText: 'age'),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  StepperTextFormField(label: 'cp', controller: cp,validatorText: 'cp'),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  StepperTextFormField(controller: trestbps, label: 'trestbps',validatorText: 'trestbps'),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  StepperTextFormField(controller: chol, label: 'chol',validatorText: 'chol'),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -76,28 +74,31 @@ class HeartFormScreenState extends State<HeartFormScreen> {
               style: TextStyle(color: Colors.blueGrey),
             ),
             content: Container(
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  StepperTextFormField(controller: thalach, label: 'thalach'),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  StepperTextFormField(controller: exang, label: 'exang'),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  StepperTextFormField(controller: oldpeak, label: 'oldpeak'),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  StepperTextFormField(controller: ca, label: 'ca'),
-                  SizedBox(
-                    height: 8,
-                  ),
-                ],
+              child: Form(
+                key: _formKeySteper2,
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    StepperTextFormField(controller: thalach, label: 'thalach',validatorText: 'thalach'),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    StepperTextFormField(controller: exang, label: 'exang',validatorText: 'exang'),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    StepperTextFormField(controller: oldpeak, label: 'oldpeak',validatorText: 'oldpeak'),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    StepperTextFormField(controller: ca, label: 'ca',validatorText:  'ca'),
+                    SizedBox(
+                      height: 8,
+                    ),
+                  ],
+                ),
               ),
             )),
         Step(
@@ -112,15 +113,26 @@ class HeartFormScreenState extends State<HeartFormScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-
-                BuildTextforstepper(controller: age, val: 'age'),
-                BuildTextforstepper(controller: cp, val: 'cp'),
-                BuildTextforstepper(controller: trestbps, val: 'trestbps'),
-                BuildTextforstepper(controller: chol, val: 'chol'),
-                BuildTextforstepper(controller: thalach, val: 'thalach'),
-                BuildTextforstepper(controller: exang, val: 'exang'),
-                BuildTextforstepper(controller: oldpeak, val: 'oldpeak'),
-                BuildTextforstepper(controller: ca, val: 'ca'),
+                Row(
+                  children: [
+                    BuildTextforstepper(controller: age, val: 'age'),
+                    BuildTextforstepper(controller: cp, val: 'cp'),
+                    BuildTextforstepper(controller: trestbps, val: 'trestbps'),
+                  ],
+                ),
+                Row(
+                  children: [
+                    BuildTextforstepper(controller: chol, val: 'chol'),
+                    BuildTextforstepper(controller: thalach, val: 'thalach'),
+                    BuildTextforstepper(controller: exang, val: 'exang'),
+                  ],
+                ),
+                Row(
+                  children: [
+                    BuildTextforstepper(controller: oldpeak, val: 'oldpeak'),
+                    BuildTextforstepper(controller: ca, val: 'ca'),
+                  ],
+                ),
               ],
             )))
       ];
@@ -139,7 +151,6 @@ class HeartFormScreenState extends State<HeartFormScreen> {
         ),
         body: Theme(
           data: ThemeData(
-
               colorScheme: ColorScheme.light(
             primary: defaultColor,
           )),
@@ -149,12 +160,44 @@ class HeartFormScreenState extends State<HeartFormScreen> {
             currentStep: _activeStepIndex,
             steps: stepList(),
             onStepContinue: () {
-              if (_activeStepIndex < (stepList().length - 1)) {
+              if (_activeStepIndex < (stepList().length - 1)){
+                if(_formKeySteper1.currentState!.validate() && _activeStepIndex == 0)
                 setState(() {
                   _activeStepIndex += 1;
                 });
-              } else {
-                navigateTo(context, HeartResultScreen());
+              else if(_activeStepIndex == 1 && _formKeySteper2.currentState!.validate()){
+                  setState(() {
+                  _activeStepIndex += 1;
+                });
+              }
+              }
+              else {
+                ApiProvider apiprovider = ApiProvider();
+                apiprovider.postWithDio(
+                    'https://tabiba.herokuapp.com/heart/api/heart_data',
+                    headers: {
+                      'Authorization':
+                          'Token ${CacheHelper.getData(key: 'token')}'
+                    },
+                    body: {
+                      "age": age.text,
+                      "cp": cp.text,
+                      "trestbps": trestbps.text,
+                      "chol": chol.text,
+                      "thalach": thalach.text,
+                      "exang": "360.00",
+                      "oldpeak": "140.00",
+                      "ca": "900.00"
+                    }).then((value) {
+                  print(value.toString());
+                  CacheHelper.saveData(
+                      key: 'heart_result',
+                      value: value['response']['result'][0]);
+                  CacheHelper.saveData(
+                      key: 'heart_probability',
+                      value: value['response']['result2'][0][0]);
+                  navigateTo(context, HeartrResultScreen());
+                });
               }
             },
             onStepCancel: () {
@@ -174,36 +217,6 @@ class HeartFormScreenState extends State<HeartFormScreen> {
           ),
         ));
   }
-
-  Widget StepperTextFormField(
-      {
-        @required TextEditingController? controller,
-        var onSubmit,
-        var onChange,
-        var onTap,
-        bool ispassword = false,
-        @required String? label,
-        IconData? suffix,
-        var suffixPressed}) {
-    return TextFormField(
-      keyboardType: TextInputType.number,
-      controller: controller,
-      obscureText: ispassword,
-      onFieldSubmitted: onSubmit,
-      onChanged: onChange,
-      onTap: onTap,
-      decoration: InputDecoration(
-        labelText: label,
-        border:  OutlineInputBorder(
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(15),
-              bottomLeft: Radius.circular(15),
-            )),
-      ),
-    );
-  }
-  Widget BuildTextforstepper({@required String? val,@required TextEditingController? controller})=>
-      Text('$val : ${controller!.text},',style: TextStyle(fontFamily: 'spartman',fontWeight: FontWeight.bold),);
 }
 /*
 *

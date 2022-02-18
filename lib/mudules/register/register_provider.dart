@@ -44,7 +44,8 @@ class RegisterProvider extends ChangeNotifier{
         CacheHelper.saveData(key: 'email', value: _response['response']['user']['email']);
       }
       else{
-        showExceptionAlertDialog(context, title: 'failed to register', message: _response['response']['email'][0].toString());
+        showExceptionAlertDialog(context, title: 'failed to register', message: '${_response['response']['email'][0]??''}\n'
+        '${_response['response']['username'][0]??''}');
       }
     }else{
       final _response = await _ApiInstance.postWithDio(

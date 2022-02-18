@@ -1,17 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 import 'package:tabibak/shared/styles/icon_broken.dart';
+import 'package:tabibak/shared/styles/themes.dart';
+import 'package:tabibak/shared_preferences/shared_preferences.dart';
 
-class HeartResultScreen extends StatelessWidget {
+class HeartrResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  AppBar(
-        leading: IconButton(icon: Icon(IconBroken.Arrow___Left_2),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(IconBroken.Arrow___Left_2),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
         ),
-      ),
-        body: Center(child: Text('HeartResult Screen')));
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if(CacheHelper.getData(key: 'heart_result')==0)
+              Text('please visit a doctor',style: TextStyle(fontWeight:FontWeight.bold),),
+              if(CacheHelper.getData(key: 'heart_result')==1)
+              Text('your medical analysis is negative',style: TextStyle(color: defaultColor,fontWeight:FontWeight.bold),),
+              SizedBox(height: 20,),
+              CircularPercentIndicator(
+                radius: 120.0,
+                lineWidth: 13.0,
+                animation: true,
+                percent: CacheHelper.sharedPreferences!.getDouble('heart_probability')!,
+                center: new Text(
+                  "${CacheHelper.sharedPreferences!.getDouble('heart_probability')!*100}%",
+                  style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+                ),
+                circularStrokeCap: CircularStrokeCap.round,
+                progressColor: CacheHelper.getData(key: 'heart_result')==0?Colors.red:defaultColor,
+              ),
+            ],
+          ),
+        ));
   }
 }

@@ -30,7 +30,7 @@ class KidneyResultScreen extends StatelessWidget {
                 radius: 120.0,
                 lineWidth: 13.0,
                 animation: true,
-                percent: 0.7,
+                percent: CacheHelper.sharedPreferences!.getDouble('kideny_probability')!,
                 center: new Text(
                   "${CacheHelper.sharedPreferences!.getDouble('kideny_probability')!*100}%",
                   style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),

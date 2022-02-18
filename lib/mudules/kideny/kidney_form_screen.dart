@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:tabibak/models/kidney_data.dart';
 import 'package:tabibak/networking/api_provider.dart';
 import 'package:tabibak/remote/dio_helper.dart';
+import 'package:tabibak/shared/components/component.dart';
 import 'package:tabibak/shared/components/news_component.dart';
 import 'package:tabibak/shared/styles/icon_broken.dart';
 import 'package:tabibak/shared/styles/themes.dart';
@@ -29,6 +30,8 @@ class KidnyFormScreenState extends State<KidnyFormScreen> {
   TextEditingController pcv = TextEditingController();
   TextEditingController wc = TextEditingController();
   bool htn = false;
+  GlobalKey<FormState> _formKeySteper1 = GlobalKey<FormState>();
+  GlobalKey<FormState> _formKeySteper2 = GlobalKey<FormState>();
 
   late KidneyModel kidneyModel = KidneyModel(
       age: double.parse(age.text),
@@ -51,28 +54,36 @@ class KidnyFormScreenState extends State<KidnyFormScreen> {
             style: TextStyle(color: Colors.blueGrey),
           ),
           content: Container(
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 8,
-                ),
-                StepperTextFormField(label: 'age', controller: age),
-                SizedBox(
-                  height: 8,
-                ),
-                StepperTextFormField(label: 'al', controller: al),
-                SizedBox(
-                  height: 8,
-                ),
-                StepperTextFormField(controller: su, label: 'su'),
-                const SizedBox(
-                  height: 8,
-                ),
-                StepperTextFormField(controller: bgr, label: 'bgr'),
-                const SizedBox(
-                  height: 8,
-                ),
-              ],
+            child: Form(
+              key: _formKeySteper1,
+              child: Column(
+               
+                children: [
+                  SizedBox(
+                    height: 8,
+                  ),
+                  StepperTextFormField(
+                      label: 'age', controller: age, validatorText: 'age'),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  StepperTextFormField(
+                      label: 'al', controller: al, validatorText: 'al'),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  StepperTextFormField(
+                      controller: su, label: 'su', validatorText: 'su'),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  StepperTextFormField(
+                      controller: bgr, label: 'bgr', validatorText: 'bgr'),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -85,60 +96,68 @@ class KidnyFormScreenState extends State<KidnyFormScreen> {
               style: TextStyle(color: Colors.blueGrey),
             ),
             content: Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  StepperTextFormField(controller: bu, label: 'bu'),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  StepperTextFormField(controller: sc, label: 'sc'),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  StepperTextFormField(controller: hemo, label: 'hemo'),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  StepperTextFormField(controller: pcv, label: 'pcv'),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  StepperTextFormField(controller: wc, label: 'wc'),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Text('htn',
-                            style: TextStyle(
-                                fontFamily: 'spartman',
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                                color: Colors.blueGrey)),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Switch(
-                          value: htn,
-                          onChanged: (value) {
-                            setState(() {
-                              htn = value;
-                              print(htn);
-                            });
-                          },
-                          activeTrackColor: defaultColor.withOpacity(.2),
-                          activeColor: defaultColor,
-                        ),
-                      ],
+              child: Form(
+                key: _formKeySteper2,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height: 8,
                     ),
-                  )
-                ],
+                    StepperTextFormField(
+                        controller: bu, label: 'bu', validatorText: 'bu'),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    StepperTextFormField(
+                        controller: sc, label: 'sc', validatorText: 'sc'),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    StepperTextFormField(
+                        controller: hemo, label: 'hemo', validatorText: 'hemo'),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    StepperTextFormField(
+                        controller: pcv, label: 'pcv', validatorText: 'pcv'),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    StepperTextFormField(
+                        controller: wc, label: 'wc', validatorText: 'wc'),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Text('htn',
+                              style: TextStyle(
+                                  fontFamily: 'spartman',
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                  color: Colors.blueGrey)),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Switch(
+                            value: htn,
+                            onChanged: (value) {
+                              setState(() {
+                                htn = value;
+                                print(htn);
+                              });
+                            },
+                            activeTrackColor: defaultColor.withOpacity(.2),
+                            activeColor: defaultColor,
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             )),
         Step(
@@ -158,16 +177,14 @@ class KidnyFormScreenState extends State<KidnyFormScreen> {
                     BuildTextforstepper(controller: age, val: 'age'),
                     BuildTextforstepper(controller: al, val: 'al'),
                     BuildTextforstepper(controller: su, val: 'su'),
-                   
                   ],
                 ),
                 Row(
                   children: [
-                     BuildTextforstepper(controller: bgr, val: 'bgr'),
+                    BuildTextforstepper(controller: bgr, val: 'bgr'),
                     BuildTextforstepper(controller: bu, val: 'bu'),
                     BuildTextforstepper(controller: sc, val: 'sc'),
                   ],
-                
                 ),
                 Row(
                   children: [
@@ -176,7 +193,6 @@ class KidnyFormScreenState extends State<KidnyFormScreen> {
                     BuildTextforstepper(controller: wc, val: 'wc'),
                   ],
                 ),
-                
               ],
             )))
       ];
@@ -204,11 +220,18 @@ class KidnyFormScreenState extends State<KidnyFormScreen> {
             currentStep: _activeStepIndex,
             steps: stepList(),
             onStepContinue: () {
-              if (_activeStepIndex < (stepList().length - 1)) {
+              if (_activeStepIndex < (stepList().length - 1)){
+                if(_formKeySteper1.currentState!.validate() && _activeStepIndex == 0)
                 setState(() {
                   _activeStepIndex += 1;
                 });
-              } else {
+              else if(_activeStepIndex == 1 && _formKeySteper2.currentState!.validate()){
+                  setState(() {
+                  _activeStepIndex += 1;
+                });
+              }
+              }
+              else {
                 ApiProvider apiProvider = ApiProvider();
                 apiProvider.postWithDio(
                     'https://tabiba.herokuapp.com/kidney/api/kidney_data',
@@ -216,19 +239,18 @@ class KidnyFormScreenState extends State<KidnyFormScreen> {
                       'Authorization':
                           'Token ${CacheHelper.getData(key: 'token')}'
                     },
-                    body:{
-                         "age": age.text,
-                         "al": al.text,
-                         "su": su.text,
-                         "bgr": bgr.text,
-                         "bu": bu.text,
-                         "sc": sc.text,
-                         "hemo": hemo.text,
-                         "pcv": pcv.text,
-                         "wc": wc.text,
-                         "htn": htn==true?'yes':'no'
-                        }
-                      ).then((value) {
+                    body: {
+                      "age": age.text,
+                      "al": al.text,
+                      "su": su.text,
+                      "bgr": bgr.text,
+                      "bu": bu.text,
+                      "sc": sc.text,
+                      "hemo": hemo.text,
+                      "pcv": pcv.text,
+                      "wc": wc.text,
+                      "htn": htn == true ? 'yes' : 'no'
+                    }).then((value) {
                   print('kideny' + value.toString());
                   CacheHelper.saveData(
                       key: 'kideny_result',
@@ -244,7 +266,6 @@ class KidnyFormScreenState extends State<KidnyFormScreen> {
               if (_activeStepIndex == 0) {
                 return;
               }
-
               setState(() {
                 _activeStepIndex -= 1;
               });
@@ -257,54 +278,4 @@ class KidnyFormScreenState extends State<KidnyFormScreen> {
           ),
         ));
   }
-
-  Widget StepperTextFormField(
-      {@required TextEditingController? controller,
-      var onSubmit,
-      var onChange,
-      var onTap,
-      bool ispassword = false,
-      @required String? label,
-      IconData? suffix,
-      var suffixPressed}) {
-    return TextFormField(
-      keyboardType: TextInputType.number,
-      controller: controller,
-      obscureText: ispassword,
-      onFieldSubmitted: onSubmit,
-      onChanged: onChange,
-      onTap: onTap,
-      decoration: InputDecoration(
-        labelText: label,
-        border: OutlineInputBorder(
-            borderRadius: BorderRadius.only(
-          topRight: Radius.circular(15),
-          bottomLeft: Radius.circular(15),
-        )),
-      ),
-    );
-  }
-
-  Widget BuildTextforstepper(
-          {@required String? val,
-          @required TextEditingController? controller}) =>
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          decoration: BoxDecoration(
-              color: defaultColor, borderRadius: BorderRadius.circular(15)),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              '$val : ${controller!.text}',
-              style: TextStyle(
-                color: Colors.white,
-                  fontFamily: 'spartman', fontWeight: FontWeight.bold),
-            ),
-          ),
-        ),
-      );
 }
-/*
-*
-* */
