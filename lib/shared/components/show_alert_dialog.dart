@@ -43,7 +43,7 @@ Future<bool?> showAlertDialog(
             onPressed: () => Navigator.of(context).pop(false),
           ),
         CupertinoDialogAction(
-          child: Text(defaultActionText),
+          child: Text(defaultActionText,style: TextStyle(color: defaultColor),),
           onPressed: () => Navigator.of(context).pop(true),
         ),
       ],

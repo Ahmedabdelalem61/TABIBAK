@@ -177,6 +177,9 @@ class ApiProvider {
         print(responseJson);
         return {'status_code': 422, 'response': responseJson};
       case 401:
+        responseJson = response.data;
+        print(responseJson);
+        return {'status_code': 401, 'response': responseJson};
       case 403:
         throw UnauthorisedException(response.data);
       case 500:

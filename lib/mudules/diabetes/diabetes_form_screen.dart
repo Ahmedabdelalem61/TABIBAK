@@ -181,14 +181,18 @@ class DiabetesFormScreenState extends State<DiabetesFormScreen> {
                       "SkinThickness": SkinThickness.text,
                       "Insulin": Insulin.text,
                     }).then((value) {
+                  if (value['status_code'] == 200) {
+                    CacheHelper.saveData(
+                        key: 'diabetes_result',
+                        value: value['response']['result'][0]);
+                    CacheHelper.saveData(
+                        key: 'diabetes_probability',
+                        value: value['response']['result2'][0][0]);
+                    navigateTo(context, DiabetesResultScreen());
+                  } else {
+                    buildEndedSession(context);
+                  }
                   print(value.toString());
-                  CacheHelper.saveData(
-                      key: 'diabetes_result',
-                      value: value['response']['result'][0]);
-                  CacheHelper.saveData(
-                      key: 'diabetes_probability',
-                      value: value['response']['result2'][0][0]);
-                  navigateTo(context, DiabetesResultScreen());
                 });
               }
             },

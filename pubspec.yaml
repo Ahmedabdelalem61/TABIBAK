@@ -21,26 +21,24 @@ environment:
   sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
-  flutter:
-    sdk: flutter
-
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
-  hexcolor: ^2.0.3
   bloc: ^8.0.2
   carousel_slider: ^4.0.0
-  percent_indicator: ^3.0.1
+  cupertino_icons: ^1.0.2
   dio: ^4.0.0
+  flutter:
+    sdk: flutter
+  hexcolor: ^2.0.3
   http: ^0.13.4
+  
+  percent_indicator: ^3.0.1
   provider: ^6.0.2
   shared_preferences: ^2.0.13
 
 dev_dependencies:
+  flutter_native_splash: ^2.0.2
+  intl: ^0.17.0
   flutter_test:
     sdk: flutter
-  flutter_native_splash: ^2.0.2
 
 flutter_native_splash:
   color: "#1DBCB8"
@@ -50,7 +48,6 @@ flutter_native_splash:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter.
 flutter:
 
@@ -63,13 +60,10 @@ flutter:
   assets:
     - assets/logo/TABIBAK-logos_transparent.png
   #   - images/a_dot_ham.jpeg
-
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
-
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
-
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
@@ -79,7 +73,7 @@ flutter:
     - family: spartman
       fonts:
         - asset: assets/fonts/Spartan-VariableFont_wght.ttf
-  #     - asset: fonts/Schyler-Italic.ttf
+          #     - asset: fonts/Schyler-Italic.ttf
           #weight: 700
     - family: IconBroken
       fonts:

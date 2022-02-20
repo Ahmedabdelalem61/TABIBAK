@@ -1,9 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tabibak/models/kidney_data.dart';
 import 'package:tabibak/networking/api_provider.dart';
-import 'package:tabibak/remote/dio_helper.dart';
 import 'package:tabibak/shared/components/component.dart';
 import 'package:tabibak/shared/components/news_component.dart';
 import 'package:tabibak/shared/styles/icon_broken.dart';
@@ -57,7 +55,6 @@ class KidnyFormScreenState extends State<KidnyFormScreen> {
             child: Form(
               key: _formKeySteper1,
               child: Column(
-               
                 children: [
                   SizedBox(
                     height: 8,
@@ -220,20 +217,20 @@ class KidnyFormScreenState extends State<KidnyFormScreen> {
             currentStep: _activeStepIndex,
             steps: stepList(),
             onStepContinue: () {
-              if (_activeStepIndex < (stepList().length - 1)){
-                if(_formKeySteper1.currentState!.validate() && _activeStepIndex == 0)
-                setState(() {
-                  _activeStepIndex += 1;
-                });
-              else if(_activeStepIndex == 1 && _formKeySteper2.currentState!.validate()){
+              if (_activeStepIndex < (stepList().length - 1)) {
+                if (_formKeySteper1.currentState!.validate() &&
+                    _activeStepIndex == 0)
                   setState(() {
-                  _activeStepIndex += 1;
-                });
-              }
-              }
-              else {
-                ApiProvider apiProvider = ApiProvider();
-                apiProvider.postWithDio(
+                    _activeStepIndex += 1;
+                  });
+                else if (_activeStepIndex == 1 &&
+                    _formKeySteper2.currentState!.validate()) {
+                  setState(() {
+                    _activeStepIndex += 1;
+                  });
+                }
+              } else {
+                ApiProvider.internal().postWithDio(
                     'https://tabiba.herokuapp.com/kidney/api/kidney_data',
                     headers: {
                       'Authorization':
@@ -251,14 +248,19 @@ class KidnyFormScreenState extends State<KidnyFormScreen> {
                       "wc": wc.text,
                       "htn": htn == true ? 'yes' : 'no'
                     }).then((value) {
+                  if (value['status_code'] == 200) {
+                    print(value.toString());
+                    CacheHelper.saveData(
+                        key: 'kideny_result',
+                        value: value['response']['result'][0]);
+                    CacheHelper.saveData(
+                        key: 'kideny_probability',
+                        value: value['response']['result2'][0][0]);
+                    navigateTo(context, KidneyResultScreen());
+                  } else {
+                    buildEndedSession(context);
+                  }
                   print('kideny' + value.toString());
-                  CacheHelper.saveData(
-                      key: 'kideny_result',
-                      value: value['response']['result'][0]);
-                  CacheHelper.saveData(
-                      key: 'kideny_probability',
-                      value: value['response']['result2'][0][0]);
-                  navigateTo(context, KidneyResultScreen());
                 });
               }
             },

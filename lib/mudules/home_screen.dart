@@ -19,27 +19,31 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: defaultColor,
         actions: [
-                        Padding(
-                padding: const EdgeInsets.only(right: 15, top: 15),
-                child: IconButton(
-                    onPressed: () {
-                      navigateTo(
-                        context,
-                        ChangeNotifierProvider<ProfileProvider>(
-                          create: (_) => ProfileProvider(),
-                          child: Consumer<ProfileProvider>(builder: (_,profileProvider,childl){
-                            //TODO:remove  profileProvider.getProfileData();
-                            return ProfileScreen();
-                          }),
-                        ),
-                      );
-                    },
-                    icon: Icon(
-                      IconBroken.Category,
-                      size: 25,
-                      color: Colors.white,
-                    )),
-              )
+          IconButton(onPressed: (){
+            CacheHelper.saveData(key: 'token', value: '790e890d571753148bbc9c4447f106e74ecf4d1404f080245f3e259703d58b09');
+          }, icon: Icon(Icons.remove)),
+          Padding(
+            padding: const EdgeInsets.only(right: 15, top: 15),
+            child: IconButton(
+                onPressed: () {
+                  navigateTo(
+                    context,
+                    ChangeNotifierProvider<ProfileProvider>(
+                      create: (_) => ProfileProvider(),
+                      child: Consumer<ProfileProvider>(
+                          builder: (_, profileProvider, childl) {
+                        //TODO:remove  profileProvider.getProfileData();
+                        return ProfileScreen();
+                      }),
+                    ),
+                  );
+                },
+                icon: Icon(
+                  IconBroken.Category,
+                  size: 25,
+                  color: Colors.white,
+                )),
+          )
         ],
       ),
       backgroundColor: defaultColor,
@@ -47,21 +51,24 @@ class HomeScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-                padding: const EdgeInsets.all(20),
-                child: Text(
-                  'Hi!\n${CacheHelper.getData(key: 'username').toString().split(' ')[0].toUpperCase()}',
-                  style: TextStyle(
-                      fontSize: 35,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ),
-              ),
+            padding: const EdgeInsets.all(20),
+            child: Text(
+              'Hi!\n${CacheHelper.getData(key: 'username').toString().split(' ')[0].toUpperCase()}',
+              style: TextStyle(
+                  fontSize: 35,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
+            ),
+          ),
           Padding(
-            padding: const EdgeInsets.only(left:20.0,bottom: 20.0),
+            padding: const EdgeInsets.only(left: 20.0, bottom: 20.0),
             child: Text(
               'Tabibak is here For You!',
               style: Theme.of(context).textTheme.caption?.copyWith(
-                  color: Colors.white, fontSize: 18, fontFamily: 'spartman',fontWeight: FontWeight.bold),
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontFamily: 'spartman',
+                  fontWeight: FontWeight.bold),
             ),
           ),
           Expanded(

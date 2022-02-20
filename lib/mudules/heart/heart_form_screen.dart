@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:tabibak/networking/api_provider.dart';
 import 'package:tabibak/shared/components/component.dart';
 import 'package:tabibak/shared/components/news_component.dart';
@@ -189,14 +188,20 @@ class HeartFormScreenState extends State<HeartFormScreen> {
                       "oldpeak": "140.00",
                       "ca": "900.00"
                     }).then((value) {
-                  print(value.toString());
-                  CacheHelper.saveData(
+                      if(value['status_code']==200){
+                        CacheHelper.saveData(
                       key: 'heart_result',
                       value: value['response']['result'][0]);
                   CacheHelper.saveData(
                       key: 'heart_probability',
                       value: value['response']['result2'][0][0]);
                   navigateTo(context, HeartrResultScreen());
+
+                      }else{
+                        buildEndedSession(context);
+                      }
+                  print(value.toString());
+                  
                 });
               }
             },

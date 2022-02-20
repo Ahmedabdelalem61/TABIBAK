@@ -5,6 +5,8 @@ import 'package:tabibak/networking/api_provider.dart';
 import 'package:tabibak/shared/components/news_component.dart';
 import 'package:tabibak/shared/components/show_exception_alert_dialog.dart';
 import 'package:tabibak/shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
+
 enum registerOrLogn {login,register}
 class RegisterProvider extends ChangeNotifier{
   ApiProvider _ApiInstance = ApiProvider();
@@ -44,8 +46,16 @@ class RegisterProvider extends ChangeNotifier{
         CacheHelper.saveData(key: 'email', value: _response['response']['user']['email']);
       }
       else{
-        showExceptionAlertDialog(context, title: 'failed to register', message: '${_response['response']['email'][0]??''}\n'
-        '${_response['response']['username'][0]??''}');
+        String message = '';
+        if(_response['response']['email']!=null && _response['response']['username']!=null)
+          message = '${_response['response']['email'][0]}\n'
+        '${_response['response']['username'][0]}';
+        else if(_response['response']['email']!=null)
+          message = '${_response['response']['email'][0]}';
+        else{
+          message = '${_response['response']['username'][0]}';
+        }
+        showExceptionAlertDialog(context, title: 'failed to register', message:message );
       }
     }else{
       final _response = await _ApiInstance.postWithDio(
@@ -71,8 +81,10 @@ class RegisterProvider extends ChangeNotifier{
         showExceptionAlertDialog(context, title: 'failed to login', message: '${_response['response']['non_field_errors'][0].toString()}\nemail or password wrong');
       }
     }
-
+    
     _setIsLoading();
+    CacheHelper.saveData(key: 'signed_since', value:DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()).toString());
+
   }
 
   void toggleRegisterLogin(){

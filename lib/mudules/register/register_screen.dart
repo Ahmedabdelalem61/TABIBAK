@@ -136,6 +136,7 @@ class RegisterScreen extends StatelessWidget {
                         },
                       ),
                     ),
+                  if(!_registerProvider.isLoading)
                   TextButton(
                     onPressed: () {
                       useranmeController.clear();

@@ -85,10 +85,10 @@ class ProfileScreen extends StatelessWidget {
                             height: 5,
                           ),
                           Text(
-                            'TODOlater',
+                            'signed since  ${CacheHelper.getData(key: 'signed_since')}',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 13,
+                              fontSize: 11,
                               fontFamily: 'spartman',
                               color: defaultColor,
                             ),
@@ -117,6 +117,7 @@ class ProfileScreen extends StatelessWidget {
                       color: Colors.white.withOpacity(.9),
                       elevation: 9,
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           SizedBox(
                             height: 8.0,
@@ -166,21 +167,27 @@ class ProfileScreen extends StatelessWidget {
                               ],
                             ),
                           ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            'Edit your personnel information',
-                            style: TextStyle(
-                                fontFamily: 'spartman',
-                                fontWeight: FontWeight.bold),
-                          ),
-                          IconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              IconBroken.Edit_Square,
-                              color: defaultColor,
-                              size: 25,
+                          Container(
+                            padding: EdgeInsets.all(8.0),
+                            width: double.infinity,
+                            height: 45,
+                            child: ElevatedButton(
+                              style: ButtonStyle(
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
+                                ),
+                              ),
+                              child: Text(
+                                'Edit',
+                                style: TextStyle(
+                                    fontFamily: 'spartman',
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              onPressed: () {},
                             ),
                           ),
                         ],
@@ -210,121 +217,121 @@ class ProfileScreen extends StatelessWidget {
                         fontSize: 14,
                         fontWeight: FontWeight.bold)),
                 //to add info about disease
-                if(CacheHelper.getData(key: 'kideny_result')!=null)
-                Row(
-                  children: [
-                    buildDiseaseIndicator(
-                        diseaseName: 'kidney',
-                        keyOfProbability: 'kideny_probability',
-                        keyOfResult: 'kideny_result'),
-                    Container(
-                        child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 40.0),
-                        Row(
-                          children: [
-                            buildTextchips(entry: 'age', val: 'age'),
-                            buildTextchips(entry: 'al', val: 'al'),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            buildTextchips(entry: 'su', val: 'su'),
-                            buildTextchips(entry: 'bgr', val: 'bgr'),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            buildTextchips(entry: 'bu', val: 'bu'),
-                            buildTextchips(entry: 'sc', val: 'sc'),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            buildTextchips(entry: 'hemo', val: 'hemo'),
-                            buildTextchips(entry: 'pcv', val: 'pcv'),
-                          ],
-                        ),
-                        buildTextchips(entry: 'wc', val: 'wc'),
-                      ],
-                    ))
-                  ],
-                ),
-                if(CacheHelper.getData(key: 'heart_result')!=null)
-                Row(
-                  children: [
-                    buildDiseaseIndicator(
-                        diseaseName: 'heart',
-                        keyOfProbability: 'heart_probability',
-                        keyOfResult: 'heart_result'),
-                    Container(
-                        child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 40.0,
-                        ),
-                        Row(
-                          children: [
-                            buildTextchips(entry: 'age', val: '11'),
-                            buildTextchips(entry: 'cp', val: '11'),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            buildTextchips(entry: 'trestbps', val: '11'),
-                            buildTextchips(entry: 'chol', val: '11'),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            buildTextchips(entry: 'thalach', val: '11'),
-                            buildTextchips(entry: 'exang', val: '11'),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            buildTextchips(entry: 'oldpeak', val: '11'),
-                            buildTextchips(entry: 'ca', val: '11'),
-                          ],
-                        ),
-                      ],
-                    ))
-                  ],
-                ),
-                if(CacheHelper.getData(key: 'diabetes_result')!=null)
-                Row(
-                  children: [
-                    buildDiseaseIndicator(
-                        diseaseName: 'diabetes',
-                        keyOfProbability: 'diabetes_probability',
-                        keyOfResult: 'diabetes_result'),
-                    Container(
-                        child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 40),
-                        Row(
-                          children: [
-                            buildTextchips(entry: 'age', val: '11'),
-                            buildTextchips(entry: 'Pregnancy', val: '11'),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            buildTextchips(entry: 'Glucose', val: '11'),
-                            buildTextchips(entry: 'Insulin', val: '11'),
-                          ],
-                        ),
-                        buildTextchips(entry: 'SkinThickness', val: '45'),
-                      ],
-                    ))
-                  ],
-                )
+                if (CacheHelper.getData(key: 'kideny_result') != null)
+                  Row(
+                    children: [
+                      buildDiseaseIndicator(
+                          diseaseName: 'kidney',
+                          keyOfProbability: 'kideny_probability',
+                          keyOfResult: 'kideny_result'),
+                      Container(
+                          child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 40.0),
+                          Row(
+                            children: [
+                              buildTextchips(entry: 'age', val: 'age'),
+                              buildTextchips(entry: 'al', val: 'al'),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              buildTextchips(entry: 'su', val: 'su'),
+                              buildTextchips(entry: 'bgr', val: 'bgr'),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              buildTextchips(entry: 'bu', val: 'bu'),
+                              buildTextchips(entry: 'sc', val: 'sc'),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              buildTextchips(entry: 'hem', val: 'hemo'),
+                              buildTextchips(entry: 'pcv', val: 'pcv'),
+                            ],
+                          ),
+                          buildTextchips(entry: 'wc', val: 'wc'),
+                        ],
+                      ))
+                    ],
+                  ),
+                if (CacheHelper.getData(key: 'heart_result') != null)
+                  Row(
+                    children: [
+                      buildDiseaseIndicator(
+                          diseaseName: 'heart',
+                          keyOfProbability: 'heart_probability',
+                          keyOfResult: 'heart_result'),
+                      Container(
+                          child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 40.0,
+                          ),
+                          Row(
+                            children: [
+                              buildTextchips(entry: 'age', val: '11'),
+                              buildTextchips(entry: 'cp', val: '11'),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              buildTextchips(entry: 'tre', val: '11'),
+                              buildTextchips(entry: 'cho', val: '11'),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              buildTextchips(entry: 'tha', val: '11'),
+                              buildTextchips(entry: 'exa', val: '11'),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              buildTextchips(entry: 'peak', val: '11'),
+                              buildTextchips(entry: 'ca', val: '11'),
+                            ],
+                          ),
+                        ],
+                      ))
+                    ],
+                  ),
+                if (CacheHelper.getData(key: 'diabetes_result') != null)
+                  Row(
+                    children: [
+                      buildDiseaseIndicator(
+                          diseaseName: 'diabetes',
+                          keyOfProbability: 'diabetes_probability',
+                          keyOfResult: 'diabetes_result'),
+                      Container(
+                          child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 40),
+                          Row(
+                            children: [
+                              buildTextchips(entry: 'age', val: '11'),
+                              buildTextchips(entry: 'Pre', val: '11'),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              buildTextchips(entry: 'Glu', val: '11'),
+                              buildTextchips(entry: 'Ins', val: '11'),
+                            ],
+                          ),
+                          buildTextchips(entry: 'Ski', val: '45'),
+                        ],
+                      ))
+                    ],
+                  )
               ],
             ),
           ),
