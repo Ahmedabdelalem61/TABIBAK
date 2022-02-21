@@ -250,12 +250,11 @@ class KidnyFormScreenState extends State<KidnyFormScreen> {
                     }).then((value) {
                   if (value['status_code'] == 200) {
                     print(value.toString());
-                    CacheHelper.saveData(
-                        key: 'kideny_result',
-                        value: value['response']['result'][0]);
-                    CacheHelper.saveData(
-                        key: 'kideny_probability',
-                        value: value['response']['result2'][0][0]);
+                    CacheHelper.sharedPreferences!.setInt(
+                        'kideny_result', value['response']['result'][0]);
+                    CacheHelper.sharedPreferences!.setDouble(
+                        'kideny_probability',
+                        value['response']['result2'][0][0]);
                     navigateTo(context, KidneyResultScreen());
                   } else {
                     buildEndedSession(context);

@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
-import 'package:tabibak/mudules/home_screen.dart';
 import 'package:tabibak/mudules/register/register_provider.dart';
 import 'package:tabibak/shared/components/component.dart';
-import 'package:tabibak/shared/components/news_component.dart';
 import 'package:tabibak/shared/styles/icon_broken.dart';
 import 'package:tabibak/shared/styles/themes.dart';
 
@@ -14,7 +11,6 @@ class RegisterScreen extends StatelessWidget {
   TextEditingController useranmeController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-
 
 
   @override

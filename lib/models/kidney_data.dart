@@ -1,62 +1,54 @@
+class KidneyModel {
+  late dynamic age;
+  late dynamic al;
+  late dynamic su;
+  late dynamic bgr;
+  late dynamic bu;
+  late dynamic sc;
+  late dynamic hemo;
+  late dynamic pcv;
+  late dynamic wc;
+  late dynamic htn;
+  late dynamic result1;
+  late dynamic result2;
+  KidneyModel(
+      {required this.age,
+      required this.al,
+      required this.su,
+      required this.bgr,
+      required this.bu,
+      required this.sc,
+      required this.hemo,
+      required this.pcv,
+      required this.wc,
+      required this.htn});
 
-class KidneyModel{
-
- /*
- *
-    "age": 20.00,
-    "al": 50,
-    "su": 50.00,
-    "bgr": 500,
-    "bu": 800,
-    "sc": 50.00,
-    "hemo": 55.00,
-    "pcv": 555,
-    "wc": 55,
-    "htn": "yes"
-}
- * */
-  late double age;
-  late double al;
-  late double su;
-  late double bgr;
-  late double bu;
-  late double sc;
-  late double hemo;
-  late double pcv;
-  late double wc;
-  late String htn;
- List<dynamic>? result1 ;
- List<dynamic>? result2 ;
-  KidneyModel({
-    required this.age,
-    required this.al,
-    required this.su,
-    required this.bgr,
-    required this.bu,
-    required this.sc,
-    required this.hemo,
-    required this.pcv,
-    required this.wc,
-    required this.htn
-  });
-
-   KidneyModel.fromJson(Map<String,dynamic>json){
+  KidneyModel.fromJson(Map<String, dynamic> json) {
     result1 = json['result'];
     result2 = json['result2'];
+    age = json['age'];
+    al = json['al'];
+    su = json['su'];
+    bgr = json['bgr'];
+    bu = json['bu'];
+    sc = json['sc'];
+    hemo = json['hemo'];
+    pcv = json['pcv'];
+    wc = json['wc'];
+    htn = json['htn'];
   }
-  Map<String,dynamic> toMap(){
+  Map<String, dynamic> toMap() {
     return {
-      'age':age,
-      'al':al,
-      'su':su,
-      'bgr':bgr,
-      'bu':bu,
-      'sc':sc,
-      'hemo':hemo,
-      'pcv':pcv,
-      'wc':wc,
-      'htn':htn,
+      'age': age,
+      'al': al,
+      'su': su,
+      'bgr': bgr,
+      'bu': bu,
+      'sc': sc,
+      'hemo': hemo,
+      'pcv': pcv,
+      'wc': wc,
+      'htn': htn,
     };
   }
-
 }
