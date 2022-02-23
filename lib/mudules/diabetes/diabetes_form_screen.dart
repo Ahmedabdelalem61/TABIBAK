@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tabibak/models/diabetes_data.dart';
 import 'package:tabibak/mudules/diabetes/diabetes_result_screen.dart';
 import 'package:tabibak/networking/api_provider.dart';
 import 'package:tabibak/shared/components/component.dart';
@@ -134,83 +135,87 @@ class DiabetesFormScreenState extends State<DiabetesFormScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(IconBroken.Arrow___Left_2),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(IconBroken.Arrow___Left_2),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
-        body: Theme(
-          data: ThemeData(
-              colorScheme: ColorScheme.light(
-            primary: defaultColor,
-          )),
-          child: Stepper(
-            physics: BouncingScrollPhysics(),
-            type: StepperType.vertical,
-            currentStep: _activeStepIndex,
-            steps: stepList(),
-            onStepContinue: () {
-              if (_activeStepIndex < (stepList().length - 1)) {
-                if (_formKeySteper1.currentState!.validate() &&
-                    _activeStepIndex == 0)
-                  setState(() {
-                    _activeStepIndex += 1;
-                  });
-                else if (_activeStepIndex == 1 &&
-                    _formKeySteper2.currentState!.validate()) {
-                  setState(() {
-                    _activeStepIndex += 1;
-                  });
-                }
-              } else {
-                ApiProvider apiProvider = ApiProvider();
-                apiProvider.postWithDio(
-                    'https://tabiba.herokuapp.com/Diabetes/api/Diabetes_data',
-                    headers: {
-                      'Authorization':
-                          'Token ${CacheHelper.getData(key: 'token')}'
-                    },
-                    body: {
-                      "age": age.text,
-                      "Pregnancies": Pregnancies.text,
-                      "Glucose": Glucose.text,
-                      "SkinThickness": SkinThickness.text,
-                      "Insulin": Insulin.text,
-                    }).then((value) {
-                  if (value['status_code'] == 200) {
-                    CacheHelper.saveData(
-                        key: 'diabetes_result',
-                        value: value['response']['result'][0]);
-                    CacheHelper.saveData(
-                        key: 'diabetes_probability',
-                        value: value['response']['result2'][0][0]);
-                    navigateTo(context, DiabetesResultScreen());
-                  } else {
-                    buildEndedSession(context);
-                  }
-                  print(value.toString());
+      ),
+      body: Theme(
+        data: ThemeData(
+            colorScheme: ColorScheme.light(
+          primary: defaultColor,
+        )),
+        child: Stepper(
+          physics: BouncingScrollPhysics(),
+          type: StepperType.vertical,
+          currentStep: _activeStepIndex,
+          steps: stepList(),
+          onStepContinue: () {
+            if (_activeStepIndex < (stepList().length - 1)) {
+              if (_formKeySteper1.currentState!.validate() &&
+                  _activeStepIndex == 0)
+                setState(() {
+                  _activeStepIndex += 1;
+                });
+              else if (_activeStepIndex == 1 &&
+                  _formKeySteper2.currentState!.validate()) {
+                setState(() {
+                  _activeStepIndex += 1;
                 });
               }
-            },
-            onStepCancel: () {
-              if (_activeStepIndex == 0) {
-                return;
-              }
+            } else {
+              DiabetesModel diabetesModel = DiabetesModel(
+                  result1: 0,
+                  result2: 0,
+                  Glucose: Glucose.text,
+                  age: age.text,
+                  SkinThickness: SkinThickness.text,
+                  Pregnancies: Pregnancies.text,
+                  Insulin: Insulin.text);
+              ApiProvider.internal()
+                  .postWithDio(
+                      'https://tabiba.herokuapp.com/Diabetes/api/Diabetes_data',
+                      headers: {
+                        'Authorization':
+                            'Token ${CacheHelper.getData(key: 'token')}'
+                      },
+                      body: diabetesModel.toMap())
+                  .then((value) {
+                if (value['status_code'] == 200) {
+                  CacheHelper.saveData(
+                      key: 'diabetes_result',
+                      value: value['response']['result'][0]);
+                  CacheHelper.saveData(
+                      key: 'diabetes_probability',
+                      value: value['response']['result2'][0][0]);
+                  navigateTo(context, DiabetesResultScreen());
+                } else {
+                  buildEndedSession(context);
+                }
+                print(value.toString());
+              });
+            }
+          },
+          onStepCancel: () {
+            if (_activeStepIndex == 0) {
+              return;
+            }
 
-              setState(() {
-                _activeStepIndex -= 1;
-              });
-            },
-            onStepTapped: (int index) {
-              setState(() {
-                _activeStepIndex = index;
-              });
-            },
-          ),
-        ));
+            setState(() {
+              _activeStepIndex -= 1;
+            });
+          },
+          onStepTapped: (int index) {
+            setState(() {
+              _activeStepIndex = index;
+            });
+          },
+        ),
+      ),
+    );
   }
 }

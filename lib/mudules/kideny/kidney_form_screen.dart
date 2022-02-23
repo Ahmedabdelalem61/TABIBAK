@@ -1,4 +1,3 @@
-// ignore_for_file: non_constant_identifier_names
 import 'package:flutter/material.dart';
 import 'package:tabibak/models/kidney_data.dart';
 import 'package:tabibak/networking/api_provider.dart';
@@ -230,24 +229,26 @@ class KidnyFormScreenState extends State<KidnyFormScreen> {
                   });
                 }
               } else {
-                ApiProvider.internal().postWithDio(
-                    'https://tabiba.herokuapp.com/kidney/api/kidney_data',
-                    headers: {
-                      'Authorization':
-                          'Token ${CacheHelper.getData(key: 'token')}'
-                    },
-                    body: {
-                      "age": age.text,
-                      "al": al.text,
-                      "su": su.text,
-                      "bgr": bgr.text,
-                      "bu": bu.text,
-                      "sc": sc.text,
-                      "hemo": hemo.text,
-                      "pcv": pcv.text,
-                      "wc": wc.text,
-                      "htn": htn == true ? 'yes' : 'no'
-                    }).then((value) {
+                KidneyModel kidneyModel = KidneyModel(
+                    age: age.text,
+                    al: al.text,
+                    su: su.text,
+                    bgr: bgr.text,
+                    bu: bu.text,
+                    sc: sc.text,
+                    hemo: hemo.text,
+                    pcv: pcv.text,
+                    wc: wc.text,
+                    htn: htn ? 'yes' : 'no');
+                ApiProvider.internal()
+                    .postWithDio(
+                        'https://tabiba.herokuapp.com/kidney/api/kidney_data',
+                        headers: {
+                          'Authorization':
+                              'Token ${CacheHelper.getData(key: 'token')}'
+                        },
+                        body: kidneyModel.toMap())
+                    .then((value) {
                   if (value['status_code'] == 200) {
                     print(value.toString());
                     CacheHelper.sharedPreferences!.setInt(

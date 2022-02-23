@@ -37,7 +37,21 @@ class KidneyModel {
     wc = json['wc'];
     htn = json['htn'];
   }
-  Map<String, dynamic> toMap() {
+  /*
+   {
+        "age": "50.00",
+        "al": 20,
+        "su": "20.00",
+        "bgr": 10,
+        "bu": 250,
+        "sc": "20.00",
+        "hemo": "50.02",
+        "pcv": 28,
+        "wc": 55,
+        "htn": "yes"
+}
+*/
+  Map<String, String> toMap() {
     return {
       'age': age,
       'al': al,

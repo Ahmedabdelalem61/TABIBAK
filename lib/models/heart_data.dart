@@ -1,5 +1,6 @@
 
-
+// to t=remember me al i have done is (i have made to map <String , String > instead <String,dynamic> and send tomap on the body insted trivial map ) 
+//and i get 500 when i press contitnue in heart model :D 
 class HeartModel {
   late dynamic age;
   late dynamic cp;
@@ -23,8 +24,8 @@ class HeartModel {
       required this.result2,
       required this.thalach});
 
-  HeartModel.fromJson(Map<String, dynamic> json) {
-    result1 = json['result'];
+  HeartModel.fromJson(Map<String, dynamic>? json) {
+    result1 = json!['result'];
     result2 = json['result2'];
     age = json['age'];
     cp = json['cp'];
@@ -35,7 +36,7 @@ class HeartModel {
     oldpeak = json['oldpeak'];
     ca = json['ca'];
   }
-  Map<String, dynamic> toMap() {
+  Map<String, String>? toMap() {
     return {
       "age": age,
       "cp": cp,
@@ -44,9 +45,23 @@ class HeartModel {
       "thalach": thalach,
       "exang": exang,
       "oldpeak": oldpeak,
+      "ca": ca,
     };
   }
 }
+/*
+{
+
+        "age": "50.00",
+        "cp": "200.01",
+        "trestbps": "350.00",
+        "chol": "50.00",
+        "thalach": "100.00",
+        "exang": "360.00",
+        "oldpeak": "140.00",
+        "ca": "900.00"
+}
+*/
   /*
   {
         "id": 2,

@@ -22,7 +22,7 @@ DiabetesModel? diabetesModel;
         }).then((value) {
       if (value['status_code'] == 200) {
         if (value['response'].length != 0) {
-          kidenyModel = KidneyModel.fromJson(value['response'][0]);
+          kidenyModel = KidneyModel.fromJson(value['response'][value['response'].length-1]);
         }
         isLoading = false;
         notifyListeners();
@@ -46,7 +46,7 @@ DiabetesModel? diabetesModel;
         }).then((value) {
       if (value['status_code'] == 200) {
         if (value['response'].length != 0) {
-          heartModel = HeartModel.fromJson(value['response'][0]);
+          heartModel = HeartModel.fromJson(value['response'][value['response'].length-1]);
         }
         isLoading = false;
         notifyListeners();
@@ -69,7 +69,7 @@ DiabetesModel? diabetesModel;
         }).then((value) {
       if (value['status_code'] == 200) {
         if (value['response'].length != 0) {
-          diabetesModel = DiabetesModel.fromJson(value['response'][0]);
+          diabetesModel = DiabetesModel.fromJson(value['response'][value['response'].length-1]);
         }
         isLoading = false;
         notifyListeners();

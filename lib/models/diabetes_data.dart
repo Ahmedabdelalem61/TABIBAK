@@ -39,7 +39,16 @@ class DiabetesModel {
     SkinThickness = json['SkinThickness'];
     Insulin = json['Insulin'];
   }
-  Map<String, dynamic> toMap() {
+  /*
+  {
+        "age": "50.00",
+        "Pregnancies": 120,
+        "Glucose": 250,
+        "SkinThickness": 360,
+        "Insulin": 150
+  }
+  */
+  Map<String, String> toMap() {
     return {
       "age": age,
       "Pregnancies": Pregnancies,

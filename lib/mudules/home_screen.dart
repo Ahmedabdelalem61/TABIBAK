@@ -34,7 +34,7 @@ class HomeScreen extends StatelessWidget {
                   navigateTo(
                     context,
                     ChangeNotifierProvider<ProfileProvider>(
-                      create: (_) => ProfileProvider()..getHeartData(context),
+                      create: (_) => ProfileProvider()..getHeartData(context)..getDiabetestData(context)..getKidenyData(context),
                       child: Consumer<ProfileProvider>(
                           builder: (_, profileProvider, childl) {
                         return ProfileScreen (profileProvider: profileProvider,);

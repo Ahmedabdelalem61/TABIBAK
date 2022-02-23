@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
-import 'package:tabibak/mudules/diabetes/diabetes_form_screen.dart';
-import 'package:tabibak/mudules/heart/heart_form_screen.dart';
-import 'package:tabibak/mudules/kideny/kidney_form_screen.dart';
 import 'package:tabibak/mudules/register/register_provider.dart';
 import 'package:tabibak/mudules/register/register_screen.dart';
 import 'package:tabibak/shared/components/news_component.dart';
@@ -66,12 +63,12 @@ Widget defalutAppBar({
 Widget BuildTextforstepper(
     {@required String? val, @required TextEditingController? controller}) {
   return Padding(
-    padding: const EdgeInsets.all(8.0),
+    padding: const EdgeInsets.all(6.0),
     child: Container(
       decoration: BoxDecoration(
           color: defaultColor, borderRadius: BorderRadius.circular(15)),
       child: Padding(
-        padding: const EdgeInsets.all(6.0),
+        padding: const EdgeInsets.all(3.0),
         child: Text(
           '$val : ${controller!.text}',
           style: TextStyle(
@@ -142,7 +139,7 @@ Widget buildDiseaseIndicator(
     {required String diseaseName,
     required dynamic Probability,
     required dynamic Result}) {
-    print('trying to build disease indicator');
+    print('try to build indicaor : '+diseaseName+Probability.runtimeType.toString()+' : '+Result.runtimeType.toString());
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -162,14 +159,14 @@ Widget buildDiseaseIndicator(
             radius: 110.0,
             lineWidth: 13.0,
             animation: true,
-            percent:
-               (Probability.runtimeType != double)? .2 : Probability,
-            center: new Text(
-              "$Probability.0%",
+            percent:Probability.runtimeType == String? .5:
+              Probability *1.0 ,//
+            center: new Text(Probability.runtimeType == String?'50.0%'://api shuld handel this issue as some time comming string and other int and other double
+              "${Probability*1.0*100}%",
               style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
             ),
             circularStrokeCap: CircularStrokeCap.round,
-            progressColor: int.parse(Result) == 0 //TODO: let backend edit 
+            progressColor: Result == 0 
                 ? Colors.red
                 : defaultColor,
           ),
