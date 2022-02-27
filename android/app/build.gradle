@@ -21,6 +21,8 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+
+
 apply plugin: 'com.android.application'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
@@ -48,3 +50,16 @@ android {
 flutter {
     source '../..'
 }
+
+
+dependencies {
+  // Import the Firebase BoM
+  implementation platform('com.google.firebase:firebase-bom:29.1.0')
+
+
+  // Add the dependencies for the desired Firebase products
+  // https://firebase.google.com/docs/android/setup#available-libraries
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'

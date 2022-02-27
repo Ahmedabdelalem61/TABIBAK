@@ -4,6 +4,7 @@ import 'package:tabibak/models/diabetes_data.dart';
 import 'package:tabibak/models/heart_data.dart';
 import 'package:tabibak/models/kidney_data.dart';
 import 'package:tabibak/mudules/home_screen.dart';
+import 'package:tabibak/mudules/profile/edit_profile_provider.dart';
 import 'package:tabibak/mudules/profile/profile_provider.dart';
 import 'package:tabibak/mudules/register/register_provider.dart';
 import 'package:tabibak/mudules/register/register_screen.dart';
@@ -12,6 +13,8 @@ import 'package:tabibak/shared/components/news_component.dart';
 import 'package:tabibak/shared/styles/icon_broken.dart';
 import 'package:tabibak/shared/styles/themes.dart';
 import 'package:tabibak/shared_preferences/shared_preferences.dart';
+
+import 'edit_profile_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({required this.profileProvider}) {}
@@ -32,13 +35,14 @@ class ProfileScreen extends StatelessWidget {
               onPressed: () {
                 CacheHelper.sharedPreferences!.clear();
                 navigateTo(
-                    context,
-                    ChangeNotifierProvider<RegisterProvider>(
-                      create: (_) => RegisterProvider(),
-                      child: CacheHelper.getData(key: 'token') == null
-                          ? RegisterScreen()
-                          : HomeScreen(),
-                    ));
+                  context,
+                  ChangeNotifierProvider<RegisterProvider>(
+                    create: (_) => RegisterProvider(),
+                    child: CacheHelper.getData(key: 'token') == null
+                        ? RegisterScreen()
+                        : HomeScreen(),
+                  ),
+                );
               },
               child: Text(
                 'Logout',
@@ -78,7 +82,7 @@ class ProfileScreen extends StatelessWidget {
                               child: CircleAvatar(
                                 radius: 50,
                                 backgroundImage: NetworkImage(
-                                    'https://image.freepik.com/free-photo/handsome-confident-smiling-man-with-hands-crossed-chest_176420-18743.jpg'),
+                                    CacheHelper.getData(key: 'profile_image')),
                               ),
                             ),
                             SizedBox(
@@ -202,7 +206,16 @@ class ProfileScreen extends StatelessWidget {
                                           fontSize: 13,
                                           fontWeight: FontWeight.bold),
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      navigateTo(
+                                        context,
+                                        ChangeNotifierProvider<
+                                            EditProfileProfider>(
+                                          create: (_) => EditProfileProfider(),
+                                          child: EditProfileScreen(profileProvider: profileProvider,)
+                                        ),
+                                      );
+                                    },
                                   ),
                                 ),
                               ],

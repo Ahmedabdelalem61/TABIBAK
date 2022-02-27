@@ -128,6 +128,7 @@ class RegisterScreen extends StatelessWidget {
                                 email: emailController.text,
                                 password: passwordController.text,
                                 username: useranmeController.text);
+                                FocusManager.instance.primaryFocus?.unfocus();
                           //
                         },
                       ),

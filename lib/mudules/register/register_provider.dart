@@ -4,6 +4,7 @@ import 'package:tabibak/mudules/home_screen.dart';
 import 'package:tabibak/networking/api_provider.dart';
 import 'package:tabibak/shared/components/news_component.dart';
 import 'package:tabibak/shared/components/show_exception_alert_dialog.dart';
+import 'package:tabibak/shared/constants/constants.dart';
 import 'package:tabibak/shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 
@@ -87,6 +88,13 @@ class RegisterProvider extends ChangeNotifier {
               key: 'username', value: response['response']['username']);
           CacheHelper.saveData(
               key: 'email', value: response['response']['email']);
+          CacheHelper.saveData(key: 'phone', value: response['response']['phone']);
+          if(response['response']['photo']!=null){
+            print('the image profile from api .....................................'+response['response']['photo'].toString());
+            CacheHelper.saveData(key: 'profile_image', value: response['response']['photo']);
+          }else{
+            CacheHelper.sharedPreferences!.setString('profile_image', defaultProfileImg);
+          }
           navigateAndFinish(context, HomeScreen());
         });
       } else {
@@ -100,8 +108,8 @@ class RegisterProvider extends ChangeNotifier {
     _setIsLoading();
     CacheHelper.saveData(
         key: 'signed_since',
-        value:
-            DateFormat('dd-MM-yyyy').format(DateTime.now()).toString());
+        value: DateFormat('dd-MM-yyyy').format(DateTime.now()).toString());
+    
   }
 
   void toggleRegisterLogin() {
@@ -127,4 +135,6 @@ class RegisterProvider extends ChangeNotifier {
         });
     return _response;
   }
+
+  
 }

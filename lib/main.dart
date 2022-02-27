@@ -5,11 +5,13 @@ import 'package:tabibak/mudules/register/register_provider.dart';
 import 'package:tabibak/mudules/register/register_screen.dart';
 import 'package:tabibak/shared/styles/themes.dart';
 import 'package:tabibak/shared_preferences/shared_preferences.dart';
-
+import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CacheHelper.init();
+  await Firebase.initializeApp(
+  );
   print(CacheHelper.getData(key: 'token'));
   runApp(MyApp());
 }

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "893082591364",
+    "project_id": "tabibak-54c62",
+    "storage_bucket": "tabibak-54c62.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:893082591364:android:d76ea210a8d954978b22d1",
+        "android_client_info": {
+          "package_name": "com.example.tabibak"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "893082591364-76s60fvdd3qpf3mm61c8ujeqh2klc9lu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tabibak",
+            "certificate_hash": "96b2d21991c38f961be20b160ef7d3b458e80132"
+          }
+        },
+        {
+          "client_id": "893082591364-t693o9qrg8i37560m9d88o3euvsp0sfl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzD-tI6JaUgwMfbm2PlnFT5KxPhEsGoZc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "893082591364-t693o9qrg8i37560m9d88o3euvsp0sfl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
