@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:tabibak/mudules/profile/edit_profile_provider.dart';
 import 'package:tabibak/mudules/profile/profile_provider.dart';
 import 'package:tabibak/shared/components/component.dart';
+import 'package:tabibak/shared/constants/constants.dart';
 import 'package:tabibak/shared/styles/icon_broken.dart';
 import 'package:tabibak/shared/styles/themes.dart';
 import 'package:tabibak/shared_preferences/shared_preferences.dart';
@@ -54,7 +55,7 @@ class EditProfileScreen extends StatelessWidget {
                           ? FileImage(editProvider.profileImage!)
                               as ImageProvider
                           : NetworkImage(
-                              CacheHelper.getData(key: 'profile_image'),
+                              CacheHelper.getData(key: 'profile_image')??defaultProfileImg,
                             ),
                     ),
                   ),

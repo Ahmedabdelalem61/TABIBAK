@@ -88,12 +88,14 @@ class RegisterProvider extends ChangeNotifier {
               key: 'username', value: response['response']['username']);
           CacheHelper.saveData(
               key: 'email', value: response['response']['email']);
-          CacheHelper.saveData(key: 'phone', value: response['response']['phone']);
-          if(response['response']['photo']!=null){
+          if(response['response']['phone']!=null){
+            CacheHelper.saveData(key: 'phone', value: response['response']['phone']);
+          }
+          if(response['response']['photo']==""){
             print('the image profile from api .....................................'+response['response']['photo'].toString());
-            CacheHelper.saveData(key: 'profile_image', value: response['response']['photo']);
+            CacheHelper.saveData(key: 'profile_image', value: defaultProfileImg);
           }else{
-            CacheHelper.sharedPreferences!.setString('profile_image', defaultProfileImg);
+            CacheHelper.saveData(key: 'profile_image', value: response['response']['photo']);
           }
           navigateAndFinish(context, HomeScreen());
         });

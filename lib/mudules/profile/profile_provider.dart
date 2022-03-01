@@ -20,7 +20,7 @@ class ProfileProvider extends ChangeNotifier {
   Future<void> getKidenyData(BuildContext context) async {
     isLoading = true;
     notifyListeners();
-    final _response = await ApiProvider.internal().getWithDio(
+    await ApiProvider.internal().getWithDio(
         'https://tabiba.herokuapp.com/kidney/api/kidney_data',
         headers: {
           'Authorization': 'Token ${CacheHelper.getData(key: 'token')}',
@@ -44,7 +44,7 @@ class ProfileProvider extends ChangeNotifier {
   Future<void> getHeartData(BuildContext context) async {
     isLoading = true;
     notifyListeners();
-    final _response = await ApiProvider.internal().getWithDio(
+    await ApiProvider.internal().getWithDio(
         'https://tabiba.herokuapp.com/heart/api/heart_data',
         headers: {
           'Authorization': 'Token ${CacheHelper.getData(key: 'token')}',
@@ -68,7 +68,7 @@ class ProfileProvider extends ChangeNotifier {
   Future<void> getDiabetestData(BuildContext context) async {
     isLoading = true;
     notifyListeners();
-    final _response = await ApiProvider.internal().getWithDio(
+    await ApiProvider.internal().getWithDio(
         'https://tabiba.herokuapp.com/Diabetes/api/Diabetes_data',
         headers: {
           'Authorization': 'Token ${CacheHelper.getData(key: 'token')}',
@@ -87,6 +87,31 @@ class ProfileProvider extends ChangeNotifier {
       }
       print('get diabetes data ' + value.toString());
     });
+  }
+
+  Future<void> getProfileData() async {
+        await ApiProvider.internal().getWithDio(
+        'https://tabiba.herokuapp.com/account/api/profile/',
+        headers: {
+          'Authorization': 'Token ${CacheHelper.getData(key: 'token')}',
+        }).then((response) {
+          print('get profile from profile provider' + response.toString());
+          CacheHelper.saveData(
+              key: 'username', value: response['response']['username']);
+          CacheHelper.saveData(
+              key: 'email', value: response['response']['email']);
+          if(response['response']['phone']!=null){
+            CacheHelper.saveData(key: 'phone', value: response['response']['phone']);
+          }
+          if(response['response']['photo']==""){
+            print('the image profile from api .....................................'+response['response']['photo'].toString());
+            CacheHelper.saveData(key: 'profile_image', value: defaultProfileImg);
+          }else{
+            CacheHelper.saveData(key: 'profile_image', value: response['response']['photo']);
+          }
+          notifyListeners();
+        });
+
   }
 
 
